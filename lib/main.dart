@@ -6,8 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(ProviderScope(child: const MyApp()));
 }
 

@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/data/db_helper.dart';
 import 'package:ecommerce_app/views/settings/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/data_service.dart';
 import '../../management/flutter_management.dart';
@@ -24,27 +28,28 @@ class HomeScreen extends ConsumerStatefulWidget {
 const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  DatabaseHelper db = new DatabaseHelper();
+
   String dropdownValue = list.first;
-  // final List<Map<String, String>> items = [
-  //   {
-  //     'image': 'assets/jacket.png',
-  //     'name': "Men's Harrington Jacket",
-  //     'price': '\$148.00'
-  //   },
-  //   {
-  //     'image': 'assets/slides.png',
-  //     'name': "Max Cirro Men's Slides",
-  //     'price': '\$55.00',
-  //     'oldPrice': '\$100.97'
-  //   },
-  //   {
-  //     'image': 'assets/nikeshoes.png',
-  //     'name': "Men's Running Shoes",
-  //     'price': '\$68.00'
-  //   },
-  // ];
+  late Future<String?> _imageFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _imageFuture = _fetchImage(); // Şəkil URL və ya yolunu əldə edin
+  }
+
+  Future<String?> _fetchImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? userId = prefs.getInt('user_id');
+    // Replace with your method to fetch the image path from the database
+    final imageUrl = await db.getProfileImagePath(userId!);
+    return imageUrl;
+  }
+
   var topSellingProducts = DataService.predefinedTopSellingProducts;
-var newInProducts = DataService.predefinedNewInProducts;
+  var newInProducts = DataService.predefinedNewInProducts;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,11 +63,27 @@ var newInProducts = DataService.predefinedNewInProducts;
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 25.sp,
-                    backgroundImage:  ref.read(getUserViewModel).fileImage == null
-                        ? AssetImage('assets/person.jpg')
-                        : Image.file(ref.read(getUserViewModel).fileImage!).image,
+                  FutureBuilder<String?>(
+                    future: _imageFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Xəta: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        return CircleAvatar(
+                          radius: 25.sp,
+                          backgroundImage: snapshot.data == null
+                              ? AssetImage('assets/person.jpg')
+                              : Image.file(File(snapshot.data!)).image,
+                        );
+                      } else {
+                        return CircleAvatar(
+                          radius: 25.sp,
+                          backgroundImage: AssetImage('assets/person.jpg'),
+                        );
+                      }
+                    },
                   ),
                   Container(
                     width: 72.sp,
@@ -254,31 +275,37 @@ var newInProducts = DataService.predefinedNewInProducts;
                                   height: 150.sp,
                                 ),
                                 Positioned(
-                                  top: 1.sp,
-                                  right: 1.sp,
-                                  child: Consumer(
-                                    builder: (context, ref, child) {
-                                      final isFavourite = ref
-                                          .watch(favouriteProvider.notifier)
-                                          .isFavourite(topSellingProducts[index]);
+                                    top: 1.sp,
+                                    right: 1.sp,
+                                    child: Consumer(
+                                      builder: (context, ref, child) {
+                                        final isFavourite = ref
+                                            .watch(favouriteProvider.notifier)
+                                            .isFavourite(
+                                                topSellingProducts[index]);
 
-                                      return IconButton(
-                                        icon: Icon(
-                                          isFavourite ? Icons.favorite : Icons.favorite_border,
-                                          color: isFavourite ? Colors.red : Colors.grey,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            ref
-                                                .read(favouriteProvider.notifier)
-                                                .toggleFavourite(topSellingProducts[index]);
-                                          });
-
-                                        },
-                                      );
-                                    },
-                                  )
-                                ),
+                                        return IconButton(
+                                          icon: Icon(
+                                            isFavourite
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: isFavourite
+                                                ? Colors.red
+                                                : Colors.grey,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              ref
+                                                  .read(favouriteProvider
+                                                      .notifier)
+                                                  .toggleFavourite(
+                                                      topSellingProducts[
+                                                          index]);
+                                            });
+                                          },
+                                        );
+                                      },
+                                    )),
                               ],
                             ),
                             Padding(
@@ -306,7 +333,7 @@ var newInProducts = DataService.predefinedNewInProducts;
                                       if (item.isDiscount == true)
                                         Padding(
                                           padding:
-                                               EdgeInsets.only(left: 8.0.sp),
+                                              EdgeInsets.only(left: 8.0.sp),
                                           child: Text(
                                             '\$${item.disCountPrice}',
                                             style: TextStyle(
@@ -402,31 +429,35 @@ var newInProducts = DataService.predefinedNewInProducts;
                                   height: 150.sp,
                                 ),
                                 Positioned(
-                                  top: 1.sp,
-                                  right: 1.sp,
-                                  child: Consumer(
-                                    builder: (context, ref, child) {
-                                      final isFavourite = ref
-                                          .watch(favouriteProvider.notifier)
-                                          .isFavourite(newInProducts[index]);
+                                    top: 1.sp,
+                                    right: 1.sp,
+                                    child: Consumer(
+                                      builder: (context, ref, child) {
+                                        final isFavourite = ref
+                                            .watch(favouriteProvider.notifier)
+                                            .isFavourite(newInProducts[index]);
 
-                                      return IconButton(
-                                        icon: Icon(
-                                          isFavourite ? Icons.favorite : Icons.favorite_border,
-                                          color: isFavourite ? Colors.red : Colors.grey,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            ref
-                                                .read(favouriteProvider.notifier)
-                                                .toggleFavourite(newInProducts[index]);
-                                          });
-
-                                        },
-                                      );
-                                    },
-                                  )
-                                ),
+                                        return IconButton(
+                                          icon: Icon(
+                                            isFavourite
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: isFavourite
+                                                ? Colors.red
+                                                : Colors.grey,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              ref
+                                                  .read(favouriteProvider
+                                                      .notifier)
+                                                  .toggleFavourite(
+                                                      newInProducts[index]);
+                                            });
+                                          },
+                                        );
+                                      },
+                                    )),
                               ],
                             ),
                             Padding(
@@ -445,18 +476,18 @@ var newInProducts = DataService.predefinedNewInProducts;
                                   Row(
                                     children: [
                                       Text(
-                                        '\${${item.price}',
+                                        '\$${item.price}',
                                         style: TextStyle(
                                           fontSize: 18.sp,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      if (item.isDiscount==true)
+                                      if (item.isDiscount == true)
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8.0),
                                           child: Text(
-                                            item.disCountPrice.toString(),
+                                            '\$${item.disCountPrice.toString()}',
                                             style: TextStyle(
                                               fontSize: 16.sp,
                                               color: Colors.grey,

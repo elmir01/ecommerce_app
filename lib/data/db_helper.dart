@@ -91,6 +91,22 @@ class DatabaseHelper {
     return res.isNotEmpty ? User.fromMap(res.first) : null;
   }
 
+  //updateUser
+  Future<int> updateUser(User usr) async {
+    final Database db = await initDB();
+    return db.update(
+      "users1",
+      {
+        "firstName": usr.firstName,
+        "lastName": usr.lastName,
+        "email": usr.email,
+        "password": usr.password,
+      },
+      where: "id = ?",
+      whereArgs: [usr.id],
+    );
+  }
+
   //addfavourite
   Future<int> addFavourite(Favourite favourite) async {
     final Database db = await initDB();

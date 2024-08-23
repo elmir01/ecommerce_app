@@ -15,27 +15,31 @@ class GetUserViewModel extends ChangeNotifier {
   User? user;
   var picker = ImagePicker();
   File? fileImage;
+
   notifyListeners();
+
 
   Future<void> loadUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? userId = prefs.getInt('user_id');
     if (userId != null) {
-      User? user = await db.getUserById(userId);
-      if (user != null) {
-
-          user = user;
-          fileImage = user.imagePath != null ? File(user.imagePath!) : null;
-notifyListeners();
+      User? fetchedUser = await db.getUserById(userId);
+      if (fetchedUser != null) {
+        user = fetchedUser;
+        fileImage = fetchedUser.imagePath != null ? File(fetchedUser.imagePath!) : null;
+        notifyListeners();
       } else {
         print("User not found.");
+        user = null; // Ensure user is set to null if not found
         notifyListeners();
       }
     } else {
       print("User ID not found in SharedPreferences.");
+      user = null; // Ensure user is set to null if user ID is not found
       notifyListeners();
     }
   }
+
   Future<void> saveImageToDatabase(String imagePath) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? userId = prefs.getInt('user_id');
@@ -47,8 +51,6 @@ notifyListeners();
   Future<void> logOut(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_id');  // Remove the saved user ID
-
-    // Navigate to the login screen (replace `LoginScreen` with your actual login screen)
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -100,13 +102,20 @@ notifyListeners();
       notifyListeners();
     }
   }
-  Future<void> deleteImage(BuildContext context) async{
+  Future<void> deleteImage(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? userId = prefs.getInt('user_id');
-    await db.deleteProfileImage(userId!);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Image deleted')),
-    );
-    notifyListeners();
+
+    if (userId != null) {
+      await db.deleteProfileImage(userId);
+
+
+        fileImage = null;  // Şəkil referansını sıfırlayın
+notifyListeners();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Image deleted')),
+      );
+    }
   }
 }

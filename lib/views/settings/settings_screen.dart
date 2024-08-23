@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,6 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/db_helper.dart';
 import '../../models/user.dart';
 import '../auth/login_screen.dart';
+import 'edit_user_screen.dart';
+
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
@@ -27,99 +30,17 @@ class SettingsScreen extends ConsumerStatefulWidget {
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   TextStyle style = TextStyle(fontWeight: FontWeight.w500, fontSize: 16.sp);
-  // final db = DatabaseHelper();
-  // User? _user;
-  // var picker = ImagePicker();
-  // File? fileImage;
-  // void initState() {
-  //   super.initState();
-  //   _loadUser();
-  // }
-  // Future<void> _loadUser() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   int? userId = prefs.getInt('user_id');
-  //   if (userId != null) {
-  //     User? user = await db.getUserById(userId);
-  //     if (user != null) {
-  //       setState(() {
-  //         _user = user;
-  //         fileImage = user.imagePath != null ? File(user.imagePath!) : null;
-  //       });
-  //     } else {
-  //       print("User not found.");
-  //     }
-  //   } else {
-  //     print("User ID not found in SharedPreferences.");
-  //   }
-  // }
-  // Future<void> _saveImageToDatabase(String imagePath) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   int? userId = prefs.getInt('user_id');
-  //   if (userId != null) {
-  //     await db.updateProfileImage(userId, imagePath);
-  //   }
-  // }
-  // Future<void> logOut(BuildContext context) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.remove('user_id');  // Remove the saved user ID
-  //
-  //   // Navigate to the login screen (replace `LoginScreen` with your actual login screen)
-  //   Navigator.pushReplacement(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => LoginScreen()),
-  //   );
-  // }
-  //
-  //
-  // Future<void> imageFromCamera() async {
-  //   final image = await picker.pickImage(
-  //     source: ImageSource.camera,
-  //     imageQuality: 50,
-  //   );
-  //   if (image != null) {
-  //     await cropImageFile(File(image.path));
-  //   }
-  // }
-  //
-  // Future<void> imageFromGallery() async {
-  //   final image = await picker.pickImage(
-  //     source: ImageSource.gallery,
-  //     imageQuality: 50,
-  //   );
-  //   if (image != null) {
-  //     await cropImageFile(File(image.path));
-  //   }
-  // }
-  //
-  // Future<void> cropImageFile(File imageFile) async {
-  //   final croppedImage = await ImageCropper().cropImage(
-  //     sourcePath: imageFile.path,
-  //     uiSettings: [
-  //       AndroidUiSettings(
-  //         toolbarTitle: 'Cropper',
-  //         toolbarColor: Colors.deepOrange,
-  //         toolbarWidgetColor: Colors.white,
-  //         initAspectRatio: CropAspectRatioPreset.square,
-  //         lockAspectRatio: false,
-  //       ),
-  //     ],
-  //   );
-  //
-  //   if (croppedImage != null) {
-  //     setState(() {
-  //       fileImage = File(croppedImage.path);
-  //     });
-  //     await _saveImageToDatabase(croppedImage.path); // Şəkil yolunu SQLite-a əlavə edin
-  //   }
-  // }
+
   void initState() {
     super.initState();
-   ref.read(getUserViewModel).loadUser();
+    ref.read(getUserViewModel).loadUser();
+// _loadUser();
   }
 
   @override
   Widget build(BuildContext context) {
-
+    final userViewModel = ref.watch(getUserViewModel);
+    print(ref.watch(getUserViewModel).user!.firstName);
     return Scaffold(
       body: SingleChildScrollView(
         child: IntrinsicWidth(
@@ -130,23 +51,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: ref.read(getUserViewModel).fileImage == null
+                    backgroundImage: userViewModel.fileImage == null
                         ? AssetImage('assets/person.jpg')
-                        : Image.file(ref.read(getUserViewModel).fileImage!).image,
+                        : Image.file(userViewModel.fileImage!).image,
                   ),
                   Positioned(
                     bottom: 0,
                     right: 0,
                     child: InkWell(
-                      onTap: () async{
+                      onTap: () async {
                         Map<Permission, PermissionStatus> status = await [
-                        Permission.storage,
-                            Permission.camera,
+                          Permission.storage,
+                          Permission.camera,
                         ].request();
-
                         showModalBottomSheet(
-                        context: context,
-                        builder: _buildBottomSheet,
+                          context: context,
+                          builder: _buildBottomSheet,
                         );
                         print('object');
                       },
@@ -174,17 +94,30 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 height: 96.sp,
                 child: ListTile(
                   title: Text(
-                    '${ref.read(getUserViewModel).user?.firstName}',
+                    '${userViewModel.user?.firstName ?? 'a'}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    '${ref.read(getUserViewModel).user?.email}\n032420343',
+                    '${userViewModel.user?.email ?? 'a'}\n032420343',
                     style: TextStyle(
                       fontSize: 16.sp,
                     ),
                   ),
                   trailing: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => EditUserScreen(user: userViewModel.user!,),
+                        ),
+                      ).then(
+                        (value) {
+                          if(value==true){
+                            ref.read(getUserViewModel).loadUser();
+                          }
+                        }
+                      );
+                    },
                     child: Text('Edit'),
                   ),
                 ),
@@ -198,7 +131,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 height: 56.sp,
                 child: ListTile(
                   onTap: () {
-
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
@@ -280,7 +212,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               SizedBox(height: 20.sp),
               TextButton(
                 onPressed: () {
-                 ref.watch(getUserViewModel).logOut(context);
+                  ref.read(getUserViewModel).logOut(context);
+                  userViewModel.fileImage = null;
                 },
                 child: Text(
                   'Sign Out',
@@ -297,6 +230,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       ),
     );
   }
+
   Widget _buildBottomSheet(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -308,40 +242,41 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text('Upload Image'),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(
+              IconButton(
+                iconSize: 40.sp,
                 onPressed: () {
-                 ref.watch(getUserViewModel).imageFromCamera();
+                  ref.read(getUserViewModel).imageFromCamera();
                   Navigator.pop(context);
                 },
-                child: Text('Camera'),
+                icon: Icon(Icons.camera_alt_rounded),
               ),
-              ElevatedButton(
+              IconButton(
+                iconSize: 40.sp,
                 onPressed: () {
-                  ref.watch(getUserViewModel).imageFromGallery();
+                  ref.read(getUserViewModel).imageFromGallery();
                   Navigator.pop(context);
                 },
-                child: Text('Gallery'),
+                icon: Icon(
+                  Icons.photo_camera_back_outlined,
+                ),
+              ),
+              IconButton(
+                iconSize: 40.sp,
+                onPressed: () async {
+                  await ref.read(getUserViewModel).deleteImage(context);
+                  Navigator.pop(context);
+
+                  print('delete');
+                },
+                icon: Icon(Icons.delete),
               )
             ],
           ),
-          ElevatedButton(
-            onPressed: () async{
-              setState(() {
-                ref.watch(getUserViewModel).deleteImage(context);
-              });
-
-              Navigator.pop(context);
-              print('delete');
-            },
-            child: Text('Delete'),
-          )
         ],
       ),
     );
   }
-
 }
