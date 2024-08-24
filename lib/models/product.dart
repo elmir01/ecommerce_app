@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+
 class Product {
   final int? id;
   final String name;
   final String? description;
   final double price;
-  final String? size;
-  final String? color;
   final int? quantity;
   final bool? isDiscount;
   final double? disCountPrice;
@@ -12,16 +12,17 @@ class Product {
   final int? categoryId;
   final int listId;
   final int? userId;
-
+  final List<String>? sizes;
+  final Map<String,Color>? colors;
   Product({
+    this.sizes,
+    this.colors,
     this.userId,
     required this.listId,
     this.id,
     required this.name,
      this.description,
     required this.price,
-     this.size,
-     this.color,
      this.quantity,
     required this.images,
      this.categoryId,
@@ -36,10 +37,10 @@ class Product {
       'name': name,
       'description': description,
       'price': price,
-      'size': size,
-      'color': color,
+      'sizes': sizes!.join(','),
+      'colors': colors,
       'quantity': quantity,
-      'images': images!.join(','), // Convert the list to a string
+      'images': images.join(','), // Convert the list to a string
       'categoryId': categoryId,
       'disCountPrice': disCountPrice,
       'isDisCount': isDiscount,
@@ -56,8 +57,8 @@ class Product {
       name: map['name'],
       description: map['description'],
       price: map['price'],
-      size: map['size'],
-      color: map['color'],
+      sizes: (map['sizes']as String ).split(','),
+      colors: map['colors'],
       quantity: map['quantity'],
       images: (map['images'] as String).split(','), // Convert the string to a list
       categoryId: map['categoryId'],

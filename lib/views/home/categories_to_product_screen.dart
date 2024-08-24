@@ -1,5 +1,7 @@
 import 'package:ecommerce_app/data/data_service.dart';
+import 'package:ecommerce_app/views/home/product_detail_screen.dart';
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,8 +22,6 @@ class _CategoriesToProductScreenState
     extends ConsumerState<CategoriesToProductScreen> {
   ScrollController scrollController = ScrollController();
   var product = DataService.predefinedProducts;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,14 @@ class _CategoriesToProductScreenState
               ),
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => ProductDetailScreen(product: product[index],),
+                      ),
+                    );
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -101,8 +108,12 @@ class _CategoriesToProductScreenState
 
                                     return IconButton(
                                       icon: Icon(
-                                        isFavourite ? Icons.favorite : Icons.favorite_border,
-                                        color: isFavourite ? Colors.red : Colors.grey,
+                                        isFavourite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: isFavourite
+                                            ? Colors.red
+                                            : Colors.grey,
                                       ),
                                       onPressed: () {
                                         setState(() {
@@ -110,13 +121,11 @@ class _CategoriesToProductScreenState
                                               .read(favouriteProvider.notifier)
                                               .toggleFavourite(product[index]);
                                         });
-
                                       },
                                     );
                                   },
                                 ),
                               ),
-
                             ],
                           ),
                           Padding(

@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import '../models/category.dart';
 import '../models/product.dart';
+
 
 class DataService {
   static final List<Category> predefinedCategories = [
@@ -17,13 +20,20 @@ class DataService {
       name: 'Men\'s Harrington Jacket',
       description: 'A powerful smartphone with 128GB storage',
       price: 148.00,
-      size: 'N/A',
-      color: 'Black',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 50,
       images: ['assets/jacket.png'],
       categoryId: 1,
       isDiscount: false,
       disCountPrice: 0,
+
     ),
     Product(
       listId: 1,
@@ -31,8 +41,14 @@ class DataService {
       name: 'Max Ciro Men\'s Slides',
       description: 'A powerful smartphone with 128GB storage',
       price: 55.00,
-      size: 'N/A',
-      color: 'Black',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 50,
       images: ['assets/slides.png'],
       categoryId: 1,
@@ -45,8 +61,14 @@ class DataService {
       name: 'Men\'s Running Shoes',
       description: 'A powerful smartphone with 128GB storage',
       price: 68.00,
-      size: 'N/A',
-      color: 'Black',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 50,
       images: ['assets/nikeshoes.png'],
       categoryId: 1,
@@ -54,20 +76,26 @@ class DataService {
       disCountPrice: 0,
     ),
   ];
- static final List<Product> predefinedProducts = [
+  static final List<Product> predefinedProducts = [
     Product(
       listId: 2,
       id: 1,
       name: 'Men\'s fleece Pullover ',
-      description: 'A powerful smartphone with 128GB storage',
+      description: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here,making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).',
       price: 100.99,
-      size: 'N/A',
-      color: 'Black',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 50,
-      images: ['assets/png1.png'],
+      images: ['assets/png1.png', 'assets/png2.png', 'assets/png3.png'],
       categoryId: 1,
-      isDiscount: false,
-      disCountPrice: 0,
+      isDiscount: true,
+      disCountPrice: 76.0,
     ),
     Product(
       listId: 2,
@@ -75,8 +103,14 @@ class DataService {
       name: 'Fleece Pullover Skate',
       description: 'Comfortable cotton t-shirt',
       price: 150.97,
-      size: 'M',
-      color: 'Blue',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 200,
       images: ['assets/png2.png'],
       categoryId: 1,
@@ -89,8 +123,14 @@ class DataService {
       name: 'Fleece Skate Hoodie',
       description: 'Comfortable cotton t-shirt',
       price: 110.00,
-      size: 'M',
-      color: 'Blue',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 200,
       images: ['assets/png3.png'],
       categoryId: 1,
@@ -103,8 +143,14 @@ class DataService {
       name: 'Men\'s Ice-Dye Pullover Hoodie',
       description: 'Comfortable cotton t-shirt',
       price: 128.97,
-      size: 'M',
-      color: 'Blue',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 200,
       images: ['assets/png4.png'],
       categoryId: 1,
@@ -117,8 +163,14 @@ class DataService {
       name: 'Fleece Skate Hoodie',
       description: 'Comfortable cotton t-shirt',
       price: 110.00,
-      size: 'M',
-      color: 'Blue',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 200,
       images: ['assets/png5.png'],
       categoryId: 1,
@@ -131,8 +183,14 @@ class DataService {
       name: 'Men\'s Ice-Dye Pullover Hoodie',
       description: 'Comfortable cotton t-shirt',
       price: 128.97,
-      size: 'M',
-      color: 'Blue',
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
       quantity: 200,
       images: ['assets/png6.png'],
       categoryId: 1,
@@ -141,50 +199,67 @@ class DataService {
     ),
     // Add more products
   ];
+  static final List<Product> predefinedNewInProducts = [
+    Product(
+      listId: 3,
+      id: 1,
+      name: 'Nike Fuel Pack',
+      description: 'A powerful smartphone with 128GB storage',
+      price: 32.00,
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
+      quantity: 50,
+      images: ['assets/nike.png'],
+      categoryId: 1,
+      isDiscount: false,
+      disCountPrice: 0,
+    ),
+    Product(
+      listId: 3,
+      id: 2,
+      name: 'Nike Show X Rush',
+      description: 'A powerful smartphone with 128GB storage',
+      price: 204.00,
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
+      quantity: 50,
+      images: ['assets/nikeshow.png'],
+      categoryId: 1,
+      isDiscount: false,
+      disCountPrice: 0,
+    ),
+    Product(
+      listId: 3,
+      id: 3,
+      name: 'Men\'s T-Shirt',
+      description: 'A powerful smartphone with 128GB storage',
+      price: 32.00,
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': Color(0xFFFFA500),
+        'Black': Color(0xFF000000),
+        'Red': Color(0xFFFF0000),
+        'Yellow': Color(0xFFFFFF00),
+        'Blue': Color(0xFF0000FF)
+      },
+      quantity: 50,
+      images: ['assets/tshirt.png'],
+      categoryId: 1,
+      isDiscount: true,
+      disCountPrice: 16.00,
+    ),
+  ];
 
- static final List<Product> predefinedNewInProducts = [
-   Product(
-     listId: 3,
-     id: 1,
-     name: 'Nike Fuel Pack',
-     description: 'A powerful smartphone with 128GB storage',
-     price: 32.00,
-     size: 'N/A',
-     color: 'Black',
-     quantity: 50,
-     images: ['assets/nike.png'],
-     categoryId: 1,
-     isDiscount: false,
-     disCountPrice: 0,
-   ),
-   Product(
-     listId: 3,
-     id: 2,
-     name: 'Nike Show X Rush',
-     description: 'A powerful smartphone with 128GB storage',
-     price: 204.00,
-     size: 'N/A',
-     color: 'Black',
-     quantity: 50,
-     images: ['assets/nikeshow.png'],
-     categoryId: 1,
-     isDiscount: false,
-     disCountPrice: 0,
-   ),
-   Product(
-     listId: 3,
-     id: 3,
-     name: 'Men\'s T-Shirt',
-     description: 'A powerful smartphone with 128GB storage',
-     price: 32.00,
-     size: 'N/A',
-     color: 'Black',
-     quantity: 50,
-     images: ['assets/tshirt.png'],
-     categoryId: 1,
-     isDiscount: true,
-     disCountPrice: 16.00,
-   ),
-
- ];
 }
