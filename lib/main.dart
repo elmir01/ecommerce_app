@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/views/auth/login_screen.dart';
+import 'package:ecommerce_app/views/home/cart_screen.dart';
 import 'package:ecommerce_app/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

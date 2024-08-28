@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
@@ -7,8 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/data_service.dart';
+import '../../models/cart.dart';
+import '../../provider/cart_notifier.dart';
 import '../../provider/favourite_provider.dart';
 import '../../provider/quantity_provider.dart';
 import 'cart_screen.dart';
@@ -25,44 +30,18 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   var selectedSize = 'S';
   var selectedColor = 'Orange';
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var product = widget.product;
     final quantity = ref.watch(quantityProvider);
-    void addToCart() {
-      // Get the current quantity from the provider
-      final currentQuantity = ref.read(quantityProvider);
-      // Create a list of products to pass to CartScreen
-      final cartProducts = [
-        Product(
-          listId: 2,
-          name: product.name,
-          price: product.price,
-          images: product.images,
-          isDiscount: product.isDiscount,
-          disCountPrice: product.disCountPrice,
-        )
-      ];
-
-      // Navigate to CartScreen and pass the cartProducts list
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CartScreen(
-            cartProducts: cartProducts,
-            quantity: quantity,
-            color: selectedColor,
-            size: selectedSize,
-          ),
-        ),
-      );
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -386,9 +365,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                                           ),
                                           trailing: CircleAvatar(
                                             radius: 16.sp,
-                                            backgroundColor: product
-                                                .colors!.values
-                                                .elementAt(index),
+                                            backgroundColor: Color(int.parse(
+                                                product.colors!.values
+                                                    .elementAt(index))),
                                           ),
                                         ),
                                       ),
@@ -542,8 +521,34 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
-          onTap: () {
-            addToCart();
+          onTap: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            int? userId = prefs.getInt('user_id');
+            final productJson = jsonEncode(
+                product.toMap()); // Product obyektini JSON stringə çevir
+
+            final cartItem = Cart(
+              listId: 1,
+              // Əgər listId varsa, burada təyin edin
+              id: product.id,
+              // Əgər id varsa, burada təyin edin
+              size: selectedSize,
+              color: selectedColor,
+              quantity: quantity,
+              productJson: productJson,
+              price: product.isDiscount == false
+                  ? quantity * product.price
+                  : quantity * product.disCountPrice!,
+              productName: product.name,
+              productImage: product.images[0],
+
+            );
+
+            ref.read(cartProvider.notifier).addToCart(cartItem);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Product added to cart')),
+            );
           },
           child: Container(
             width: 342.sp,
@@ -561,7 +566,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 children: [
                   product.isDiscount == false
                       ? Text(
-                          '\$${product.price}',
+                          '\$${(product.price * quantity).toStringAsFixed(2)}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,
@@ -569,7 +574,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                           ),
                         )
                       : Text(
-                          '\$${product.disCountPrice}',
+                          '\$${(product.disCountPrice! * quantity).toStringAsFixed(2)}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,

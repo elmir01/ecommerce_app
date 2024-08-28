@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/data/db_helper.dart';
+import 'package:ecommerce_app/views/home/product_detail_screen.dart';
 import 'package:ecommerce_app/views/settings/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ import '../../data/data_service.dart';
 import '../../management/flutter_management.dart';
 import '../../models/category.dart';
 import '../../provider/favourite_provider.dart';
+import 'cart_screen.dart';
+import 'categories_to_product_screen.dart';
 import 'shop_by_categories_screen.dart';
 import 'notification_screen.dart';
 import 'orders_screen.dart';
@@ -120,7 +123,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => CartScreen(),
+                        ),
+                      );
+                    },
                     child: CircleAvatar(
                       backgroundColor: Color.fromARGB(255, 142, 108, 209),
                       child: Icon(
@@ -193,7 +203,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     builder: (BuildContext context) {
                       return SingleChildScrollView(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => CategoriesToProductScreen(),
+                              ),
+                            );
+                          },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -244,7 +261,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   final item = topSellingProducts[index];
                   return GestureDetector(
                     onTap: () {
-                      print('productdetail');
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => ProductDetailScreen(product: item),
+                        ),
+                      );
                     },
                     child: Container(
                       width: 159.sp,
@@ -398,7 +420,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   final item = newInProducts[index];
                   return GestureDetector(
                     onTap: () {
-                      print('productdetail');
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => ProductDetailScreen(product: item,),
+                        ),
+                      );
                     },
                     child: Container(
                       width: 159.sp,

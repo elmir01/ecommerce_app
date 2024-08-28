@@ -13,7 +13,7 @@ class Product {
   final int listId;
   final int? userId;
   final List<String>? sizes;
-  final Map<String,Color>? colors;
+  final Map<String,String>? colors;
   Product({
     this.sizes,
     this.colors,

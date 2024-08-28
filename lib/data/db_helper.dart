@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/payment.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -6,7 +7,7 @@ import '../models/favourite.dart';
 import '../models/user.dart';
 
 class DatabaseHelper {
-  final databaseName = "ecommerce9.db";
+  final databaseName = "ecommerceapp2.db";
 
   //user
   String user = '''
@@ -51,6 +52,16 @@ class DatabaseHelper {
     FOREIGN KEY(userId) REFERENCES users1(id)
     )
     ''';
+  String cartTable = '''
+  CREATE TABLE carts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      listId INTEGER,
+      size TEXT,
+      color TEXT,
+      quantity INTEGER,
+      product TEXT
+    )
+    ''';
   Future<Database> initDB() async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, databaseName);
@@ -59,6 +70,7 @@ class DatabaseHelper {
       await db.execute(favouriteTable);
       await db.execute(addressTable);
       await db.execute(paymentTable);
+      await db.execute(cartTable);
     });
   }
 
@@ -244,4 +256,37 @@ class DatabaseHelper {
     return res.isNotEmpty ? res.first["imagePath"] as String? : null;
   }
 
+  Future<int> addCart(Cart cart) async {
+    final Database db = await initDB();
+    return await db.insert('carts', cart.toMap());
+  }
+
+  Future<List<Cart>> getCarts() async {
+    final Database db = await initDB();
+    final List<Map<String, dynamic>> maps = await db.query('carts');
+
+    return List.generate(maps.length, (i) {
+      return Cart.fromMap(maps[i]);
+    });
+  }
+
+
+  Future<int> updateCart(Cart cart) async {
+    final Database db = await initDB();
+    return await db.update(
+      'carts',
+      cart.toMap(),
+      where: 'id = ?',
+      whereArgs: [cart.id],
+    );
+  }
+
+  Future<int> deleteCart(int id) async {
+    final Database db = await initDB();
+    return await db.delete(
+      'carts',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }

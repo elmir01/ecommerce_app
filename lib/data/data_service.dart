@@ -22,11 +22,11 @@ class DataService {
       price: 148.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 50,
       images: ['assets/jacket.png'],
@@ -43,11 +43,11 @@ class DataService {
       price: 55.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 50,
       images: ['assets/slides.png'],
@@ -63,11 +63,11 @@ class DataService {
       price: 68.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 50,
       images: ['assets/nikeshoes.png'],
@@ -85,11 +85,11 @@ class DataService {
       price: 100.99,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 50,
       images: ['assets/png1.png', 'assets/png2.png', 'assets/png3.png'],
@@ -105,11 +105,11 @@ class DataService {
       price: 150.97,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 200,
       images: ['assets/png2.png'],
@@ -125,11 +125,11 @@ class DataService {
       price: 110.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 200,
       images: ['assets/png3.png'],
@@ -145,11 +145,11 @@ class DataService {
       price: 128.97,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 200,
       images: ['assets/png4.png'],
@@ -165,11 +165,11 @@ class DataService {
       price: 110.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 200,
       images: ['assets/png5.png'],
@@ -185,11 +185,11 @@ class DataService {
       price: 128.97,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 200,
       images: ['assets/png6.png'],
@@ -208,11 +208,11 @@ class DataService {
       price: 32.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 50,
       images: ['assets/nike.png'],
@@ -228,11 +228,11 @@ class DataService {
       price: 204.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 50,
       images: ['assets/nikeshow.png'],
@@ -248,11 +248,11 @@ class DataService {
       price: 32.00,
       sizes: ['S', 'M', 'L', 'XL', '2XL'],
       colors: {
-        'Orange': Color(0xFFFFA500),
-        'Black': Color(0xFF000000),
-        'Red': Color(0xFFFF0000),
-        'Yellow': Color(0xFFFFFF00),
-        'Blue': Color(0xFF0000FF)
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
       },
       quantity: 50,
       images: ['assets/tshirt.png'],
