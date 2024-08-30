@@ -37,7 +37,7 @@ class _MainScreenState extends ConsumerState<MainScreen>
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(),
+
       body: screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         enableFeedback: false,

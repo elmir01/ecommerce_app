@@ -84,16 +84,16 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
               controller: streetAddressController,
               text: Text('Street Address'),
             ),
-            SizedBox(
-              height: 15.sp,
-            ),
+            // SizedBox(
+            //   height: 15.sp,
+            // ),
             CustomTextfield(
               controller: cityController,
               text: Text('City'),
             ),
-            SizedBox(
-              height: 15.sp,
-            ),
+            // SizedBox(
+            //   height: 15.sp,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

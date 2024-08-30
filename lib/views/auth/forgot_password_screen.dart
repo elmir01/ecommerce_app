@@ -48,9 +48,9 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   controller: emailController,
                   text: Text('Email'),
                 ),
-                SizedBox(
-                  height: 30.sp,
-                ),
+                // SizedBox(
+                //   height: 30.sp,
+                // ),
                 CustomButton(
                   text: 'Send Code',
                   onPressed: () {

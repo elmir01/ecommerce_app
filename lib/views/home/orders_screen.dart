@@ -17,27 +17,33 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
   var scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    //  final orders = ref.watch(orderProvider);
-    //  if (orders == null || orders.isEmpty) {
-    //    return Scaffold(
-    //      appBar: AppBar(
-    //        title: const Text('Wishlist (0)'),
-    //        leading: const AppBarBackButton(),
-    //      ),
-    //      body: Center(
-    //        child: Text(
-    //          'No orders found!',
-    //          style: TextStyle(fontSize: 18.sp),
-    //        ),
-    //      ),
-    //    );
-    //  }
+
     return Scaffold(
         appBar: AppBar(
-          title: Text('Wishlist '),
-          leading: AppBarBackButton(),
+          title: Text('Orders'),
         ),
+      body:  Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.shopping_cart,
+              size: 150.sp,
+              color: Colors.amber,
+            ),
+            SizedBox(
+              height: 30.sp,
+            ),
+            Text(
+              'No Orders yet',
+              style: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w500,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

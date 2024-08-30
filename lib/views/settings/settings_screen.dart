@@ -42,6 +42,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final userViewModel = ref.watch(getUserViewModel);
     print(ref.watch(getUserViewModel).user!.firstName);
     return Scaffold(
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: IntrinsicWidth(
           stepWidth: double.infinity,

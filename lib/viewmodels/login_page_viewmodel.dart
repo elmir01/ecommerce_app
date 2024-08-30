@@ -11,6 +11,33 @@ class LoginPageViewModel extends ChangeNotifier {
   TextEditingController passwordController = TextEditingController();
   bool isLoginTrue = false;
   final db = DatabaseHelper();
+  showLoginDialog(
+      {required context,
+        AlertDialog Function(BuildContext context)? builder}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: const Text(
+            'Fill in all the information',
+          ),
+          actions: <Widget>[
+
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   notifyListeners();
   Future<void> _saveUserId(int? userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

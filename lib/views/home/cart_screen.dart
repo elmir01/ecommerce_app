@@ -18,8 +18,10 @@
 // }
 //
 
+import 'package:ecommerce_app/widgets/appbar_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../models/cart.dart';
 import '../../provider/cart_notifier.dart';
 
@@ -30,52 +32,63 @@ class CartScreen extends ConsumerWidget {
 
     double totalPrice = cartItems.fold(
       0.0,
-          (sum, item) => sum + (item.price * item.quantity),
+      (sum, item) => sum + (item.price * item.quantity),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
-        backgroundColor: Color.fromARGB(255, 142, 108, 209),
+        leading: AppBarBackButton(),
       ),
       body: cartItems.isEmpty
           ? Center(
-        child: Text(
-          'Your cart is empty',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-      )
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/emptycart.png'),
+                  SizedBox(
+                    height: 30.sp,
+                  ),
+                  Image.asset('assets/emptycarttext.png')
+                ],
+              ),
+            )
           : ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          final cartItem = cartItems[index];
-          return Dismissible(
-            key: ValueKey(cartItem.id), // Kart item-inin unikal id-si
-            direction: DismissDirection.endToStart, // Sola sürüklemə
-            onDismissed: (direction) {
-              ref.read(cartProvider.notifier).removeFromCart(cartItem); // Silmə prosesi
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('${cartItem.productName} removed from cart'),
-                ),
-              );
-            },
-            background: Container(
-              color: Colors.red,
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Icon(Icons.delete, color: Colors.white),
+              itemCount: cartItems.length,
+              itemBuilder: (context, index) {
+                final cartItem = cartItems[index];
+                return Dismissible(
+                  key: ValueKey(cartItem.id),
+                  // Kart item-inin unikal id-si
+                  direction: DismissDirection.endToStart,
+                  // Sola sürüklemə
+                  onDismissed: (direction) {
+                    ref
+                        .read(cartProvider.notifier)
+                        .removeFromCart(cartItem); // Silmə prosesi
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text('${cartItem.productName} removed from cart'),
+                      ),
+                    );
+                  },
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Icon(Icons.delete, color: Colors.white),
+                  ),
+                  child: CartItemTile(cartItem: cartItem),
+                );
+              },
             ),
-            child: CartItemTile(cartItem: cartItem),
-          );
-        },
-      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
           color: Color.fromARGB(255, 142, 108, 209),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -84,13 +97,9 @@ class CartScreen extends ConsumerWidget {
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    // Burada ödəniş prosesini başlatmaq və ya başqa bir hərəkət etmək üçün kod əlavə edin
-                  },
+                  onPressed: () {},
                   child: Text('Checkout'),
-                  style: ElevatedButton.styleFrom(
-                   
-                  ),
+                  style: ElevatedButton.styleFrom(),
                 ),
               ],
             ),
@@ -100,10 +109,8 @@ class CartScreen extends ConsumerWidget {
     );
   }
 }
-
 class CartItemTile extends ConsumerWidget {
   final Cart cartItem;
-
   const CartItemTile({required this.cartItem});
 
   @override
@@ -113,7 +120,7 @@ class CartItemTile extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        elevation: 2.0,
+        elevation: 1.0,
         child: ListTile(
           leading: Image.asset(cartItem.productImage, width: 60, height: 60),
           title: Text(cartItem.productName),
@@ -127,10 +134,11 @@ class CartItemTile extends ConsumerWidget {
               IconButton(
                 icon: Icon(Icons.remove),
                 onPressed: () {
-                  cartNotifier.decreaseQuantity(cartItem); // Miqdarı azalt
+                  cartNotifier.decreaseQuantity(cartItem);
                 },
               ),
-              Text('${cartItem.quantity}', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('${cartItem.quantity}',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {
@@ -149,8 +157,3 @@ class CartItemTile extends ConsumerWidget {
     );
   }
 }
-
-
-
-
-

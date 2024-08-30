@@ -69,9 +69,9 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                         ),
                 ),
               ),
-              SizedBox(
-                height: 15.sp,
-              ),
+              // SizedBox(
+              //   height: 15.sp,
+              // ),
               CustomTextfield(
                 controller: confirmPasswordController,
                 text: Text('Confirm Password'),
@@ -91,9 +91,9 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                         ),
                 ),
               ),
-              SizedBox(
-                height: 20.sp,
-              ),
+              // SizedBox(
+              //   height: 20.sp,
+              // ),
               CustomButton(
                 text: 'Change',
                 onPressed: () {

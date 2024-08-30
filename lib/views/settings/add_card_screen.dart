@@ -77,9 +77,9 @@ class _AddCardScreenState extends ConsumerState<AddCardScreen> {
               controller: cardNumberController,
               text: Text('Card Number'),
             ),
-            SizedBox(
-              height: 15.sp,
-            ),
+            // SizedBox(
+            //   height: 15.sp,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -87,7 +87,7 @@ class _AddCardScreenState extends ConsumerState<AddCardScreen> {
                   controller: cvvController,
                   text: Text('CVV'),
                   width: 161.sp,
-                  height: 56.sp,
+                  height: 80.sp,
                 ),
                 SizedBox(
                   width: 23.sp,
@@ -96,13 +96,13 @@ class _AddCardScreenState extends ConsumerState<AddCardScreen> {
                   controller: expController,
                   text: Text('Exp'),
                   width: 161.sp,
-                  height: 56.sp,
+                  height: 80.sp,
                 ),
               ],
             ),
-            SizedBox(
-              height: 15.sp,
-            ),
+            // SizedBox(
+            //   height: 15.sp,
+            // ),
             CustomTextfield(
               controller: cardHolderNameController,
               text: Text('CardHolder Name'),
