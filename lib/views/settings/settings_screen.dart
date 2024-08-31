@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ecommerce_app/management/flutter_management.dart';
+import 'package:ecommerce_app/views/home/orders_screen.dart';
 import 'package:ecommerce_app/views/settings/address_screen.dart';
 import 'package:ecommerce_app/views/settings/payment_screen.dart';
 import 'package:ecommerce_app/views/settings/wishlist_screen.dart';
@@ -155,12 +156,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => WishlistScreen(),
+                        builder: (context) => OrdersScreen(),
                       ),
                     );
                   },
                   title: Text(
-                    'Favourites',
+                    'Orders',
                     style: style,
                   ),
                   trailing: Icon(Icons.navigate_next),

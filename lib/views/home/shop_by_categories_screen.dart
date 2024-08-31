@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:ecommerce_app/data/data_service.dart';
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
+import 'package:ecommerce_app/widgets/cart_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -25,6 +26,12 @@ class _CategoriesScreenState extends ConsumerState<ShopByCategoriesScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: AppBarBackButton(),
+        actions: [
+          Padding(
+            padding:  EdgeInsets.only(right: 15.sp),
+            child: CartButton(),
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 32.sp),

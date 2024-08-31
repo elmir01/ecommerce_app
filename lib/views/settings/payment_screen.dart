@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/management/flutter_management.dart';
 import 'package:ecommerce_app/models/payment.dart';
 import 'package:ecommerce_app/views/settings/edit_payments_screen.dart';
 import 'package:ecommerce_app/widgets/appBar_add_button.dart';
@@ -22,41 +23,14 @@ class PaymentScreen extends ConsumerStatefulWidget {
 }
 
 class _PaymentScreenState extends ConsumerState<PaymentScreen> {
-  String maskText(String text) {
-    if (text.length <= 4) {
-      return text;
-    }
-    String maskedPart = '****';
-    String lastFourChars = text.substring(text.length - 4);
-    return maskedPart + lastFourChars;
-  }
 
-  final DatabaseHelper _dbhelper = DatabaseHelper();
-  List<Payment> _payments = [];
   @override
   void initState() {
     super.initState();
-    _fetchPayments();
+    ref.read(paymentViewModel).fetchPayments();
 
   }
-  Future<void> _fetchPayments() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? userId = prefs.getInt('user_id');
-    print('UserId: $userId');
-    if (userId != null) {
-      final payments = await _dbhelper.getPaymentByUserId(userId);
-      print('Tapılan adreslər: ${payments}');
-      setState(() {
-        _payments = payments; // id-si null olanları filter edin
-      });
-    } else {
-      print('user yoxdu');
-      setState(() {
-        _payments = [];
 
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +46,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                 CupertinoPageRoute(
                   builder: (context) => AddCardScreen(),
                 ),
-              ).then((_) => _fetchPayments());
+              ).then((_) => ref.read(paymentViewModel).fetchPayments());
             },
           ),
         ],
@@ -95,12 +69,12 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
               ),
               ListView.builder(
                   shrinkWrap: true,
-                  itemCount: _payments.length,
+                  itemCount: ref.watch(paymentViewModel).payments.length,
                   itemBuilder: (context,index){
-                    final payment = _payments[index];
+                    final payment = ref.watch(paymentViewModel).payments[index];
                     String originalText = payment.cardNumber;
                     int maskCount = 15;
-                    String maskedText = maskText(originalText);
+                    String maskedText =ref.read(paymentViewModel).maskText(originalText);
                     return Dismissible(
                       direction: DismissDirection.endToStart,
                       key: UniqueKey(),
@@ -115,8 +89,8 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                       ),
                       onDismissed: (direction) async {
                         if (payment.id != null) {
-                          await _dbhelper.deletePayment(payment.id!);
-                          _fetchPayments();
+                          await ref.watch(paymentViewModel).dbhelper.deletePayment(payment.id!);
+                          ref.read(paymentViewModel).fetchPayments();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('${payment.cardNumber} deleted')),
                           );
@@ -145,7 +119,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                                   ),
                                 ).then((result) {
                                   if (result == true) {
-                                    _fetchPayments(); // Yenidən adresləri əldə et
+                                    ref.read(paymentViewModel).fetchPayments(); // Yenidən adresləri əldə et
                                   }
                                 });;
                               },

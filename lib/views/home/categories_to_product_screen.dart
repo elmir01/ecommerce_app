@@ -1,6 +1,8 @@
 import 'package:ecommerce_app/data/data_service.dart';
 import 'package:ecommerce_app/views/home/product_detail_screen.dart';
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
+import 'package:ecommerce_app/widgets/cart_button.dart';
+import 'package:ecommerce_app/widgets/product_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,6 +30,12 @@ class _CategoriesToProductScreenState
     return Scaffold(
       appBar: AppBar(
         leading: AppBarBackButton(),
+        actions: [
+          Padding(
+            padding:  EdgeInsets.only(right: 15.sp),
+            child: CartButton(),
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -64,23 +72,13 @@ class _CategoriesToProductScreenState
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => ProductDetailScreen(product: product[index],),
+                        builder: (context) => ProductDetailScreen(
+                          product: product[index],
+                        ),
                       ),
                     );
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          // spreadRadius: 2,
-                          blurRadius: 1,
-                          // offset: Offset(0, 3), // Kölgə effekti
-                        ),
-                      ],
-                    ),
+                  child: ProductContainer(
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

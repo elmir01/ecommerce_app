@@ -22,6 +22,7 @@ class _AddCardScreenState extends ConsumerState<AddCardScreen> {
   var expController = new TextEditingController();
   var cardHolderNameController = new TextEditingController();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+
   @override
   void dispose() {
     cardNumberController.dispose();
@@ -30,34 +31,62 @@ class _AddCardScreenState extends ConsumerState<AddCardScreen> {
     cardHolderNameController.dispose();
     super.dispose();
   }
-  void _savePayments() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? userId = prefs.getInt('user_id');
-    final cardNumber = cardNumberController.text;
-    final cvv = cvvController.text;
-    final exp = expController.text;
-    final cardHolderName = cardHolderNameController.text;
 
-    if (cardNumber.isNotEmpty &&
-        cvv.isNotEmpty &&
-        exp.isNotEmpty &&
-        cardHolderName.isNotEmpty) {
+
+  void _savePayments() async {
+    if (_formKey.currentState!.validate()) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? userId = prefs.getInt('user_id');
+      final cardNumber = cardNumberController.text;
+      final cvv = cvvController.text;
+      final exp = expController.text;
+      final cardHolderName = cardHolderNameController.text;
+
       final payment = Payment(
-        id: 0, // 0 for auto increment
+        id: 0,
         cardNumber: cardNumber,
         cvv: int.parse(cvv),
         exp: exp,
-        cardHolderName: cardHolderName, userId: userId!,
+        cardHolderName: cardHolderName,
+        userId: userId!,
       );
 
       await _databaseHelper.addPayment(payment);
       Navigator.pop(context); // Navigate back to the previous screen
     } else {
-      // Optionally, show an error message or handle validation
+      // If validation fails, show a snackbar or handle accordingly
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill all fields')),
+        SnackBar(content: Text('Please correct the errors in the form')),
       );
     }
+  }
+
+  var _formKey = GlobalKey<FormState>();
+  String? _validateCardNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter card number';
+    } else if (value.length != 16) {
+      return 'Card number must be 16 digits';
+    }
+    return null;
+  }
+
+  String? _validateCVV(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter CVV';
+    } else if (value.length != 3) {
+      return 'CVV must be 3 digits';
+    }
+    return null;
+  }
+
+  String? _validateExp(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter expiration date';
+    } else if (!RegExp(r"^(0[1-9]|1[0-2])\/([0-9]{2})$").hasMatch(value)) {
+      return 'Expiration date must be in MM/YY format';
+    }
+    return null;
   }
   @override
   Widget build(BuildContext context) {
@@ -73,40 +102,49 @@ class _AddCardScreenState extends ConsumerState<AddCardScreen> {
             SizedBox(
               height: 25.sp,
             ),
-            CustomTextfield(
-              controller: cardNumberController,
-              text: Text('Card Number'),
-            ),
-            // SizedBox(
-            //   height: 15.sp,
-            // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Form(
+              key: _formKey,
+                child: Column(
               children: [
                 CustomTextfield(
-                  controller: cvvController,
-                  text: Text('CVV'),
-                  width: 161.sp,
-                  height: 80.sp,
+                  validator: _validateCardNumber,
+                  controller: cardNumberController,
+                  text: Text('Card Number'),
                 ),
-                SizedBox(
-                  width: 23.sp,
+                // SizedBox(
+                //   height: 15.sp,
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomTextfield(
+                      validator: _validateCVV,
+                      controller: cvvController,
+                      text: Text('CVV'),
+                      width: 161.sp,
+                      height: 80.sp,
+                    ),
+                    SizedBox(
+                      width: 23.sp,
+                    ),
+                    CustomTextfield(
+                      validator: _validateExp,
+                      controller: expController,
+                      text: Text('Exp'),
+                      width: 161.sp,
+                      height: 80.sp,
+                    ),
+                  ],
                 ),
+                // SizedBox(
+                //   height: 15.sp,
+                // ),
                 CustomTextfield(
-                  controller: expController,
-                  text: Text('Exp'),
-                  width: 161.sp,
-                  height: 80.sp,
+                  controller: cardHolderNameController,
+                  text: Text('CardHolder Name'),
                 ),
               ],
-            ),
-            // SizedBox(
-            //   height: 15.sp,
-            // ),
-            CustomTextfield(
-              controller: cardHolderNameController,
-              text: Text('CardHolder Name'),
-            ),
+            )),
           ],
         ),
       ),

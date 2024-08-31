@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/management/flutter_management.dart';
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
 import 'package:ecommerce_app/widgets/custom_button.dart';
 import 'package:ecommerce_app/widgets/custom_textfield.dart';
@@ -27,12 +28,14 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   @override
   void dispose() {
-    streetAddressController.dispose();
-    cityController.dispose();
-    stateController.dispose();
-    zipCodeController.dispose();
+ streetAddressController.dispose();
+ cityController.dispose();
+  stateController.dispose();
+  zipCodeController.dispose();
+
     super.dispose();
   }
+
   void _saveAddress() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? userId = prefs.getInt('user_id');
@@ -62,6 +65,13 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
       );
     }
   }
+  String? addressTextfieldValidator(value){
+    if(value==null|| value.isEmpty){
+      return 'Field cannot be left blank';
+    }
+    return null;
+  }
+  var formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -80,40 +90,56 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
             SizedBox(
               height: 30.sp,
             ),
-            CustomTextfield(
-              controller: streetAddressController,
-              text: Text('Street Address'),
-            ),
-            // SizedBox(
-            //   height: 15.sp,
-            // ),
-            CustomTextfield(
-              controller: cityController,
-              text: Text('City'),
-            ),
-            // SizedBox(
-            //   height: 15.sp,
-            // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomTextfield(
-                  width: 161.sp,
-                  height: 56.sp,
-                  controller: stateController,
-                  text: Text('State'),
-                ),
-                SizedBox(
-                  width: 23.sp,
-                ),
-                CustomTextfield(
-                  width: 161.sp,
-                  height: 56.sp,
-                  controller: zipCodeController,
-                  text: Text('Zip Code'),
-                ),
-              ],
-            ),
+            Form(
+                key: formkey,
+                child: Column(
+                  children: [
+                    CustomTextfield(
+                      validator:
+                     addressTextfieldValidator,
+                      controller:
+                     streetAddressController,
+                      text: Text('Street Address'),
+                    ),
+                    // SizedBox(
+                    //   height: 15.sp,
+                    // ),
+                    CustomTextfield(
+                      validator:
+                     addressTextfieldValidator,
+                      controller:  cityController,
+                      text: Text('City'),
+                    ),
+                    // SizedBox(
+                    //   height: 15.sp,
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomTextfield(
+                          validator:
+                         addressTextfieldValidator,
+                          width: 161.sp,
+                          height: 56.sp,
+                          controller:
+                         stateController,
+                          text: Text('State'),
+                        ),
+                        SizedBox(
+                          width: 23.sp,
+                        ),
+                        CustomTextfield(
+                          validator:  addressTextfieldValidator,
+                          width: 161.sp,
+                          height: 56.sp,
+                          controller:
+                          zipCodeController,
+                          text: Text('Zip Code'),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
           ],
         ),
       ),
@@ -121,7 +147,7 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
         padding: const EdgeInsets.only(bottom: 20),
         child: CustomButton(
           text: 'Save',
-          onPressed: _saveAddress,
+          onPressed:  _saveAddress,
           width: 342.sp,
           height: 52.sp,
         ),
@@ -136,7 +162,6 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
       //   ),
       //
       // ),
-
     );
   }
 }

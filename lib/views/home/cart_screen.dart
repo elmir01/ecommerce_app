@@ -38,6 +38,7 @@ class CartScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: AppBarBackButton(),
+        title: Text('Cart'),
       ),
       body: cartItems.isEmpty
           ? Center(

@@ -53,7 +53,6 @@ import 'package:ecommerce_app/models/product.dart';
 
 class Cart {
   final int? id;
-
   final String size;
   final String color;
   final int quantity;

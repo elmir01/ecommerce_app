@@ -22,7 +22,7 @@ class _WishlistScreenState extends ConsumerState<WishlistScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Wishlist (${favourites.length})'),
-          leading: AppBarBackButton(),
+
         ),
         body: GridView.builder(
           controller: scrollController,

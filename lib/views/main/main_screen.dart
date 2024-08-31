@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/views/home/home_screen.dart';
+import 'package:ecommerce_app/views/settings/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +29,7 @@ class _MainScreenState extends ConsumerState<MainScreen>
   var screens = [
     HomeScreen(),
     NotificationScreen(),
-    OrdersScreen(),
+    WishlistScreen(),
     SettingsScreen(),
   ];
   int selectedIndex = 0;
@@ -37,7 +38,6 @@ class _MainScreenState extends ConsumerState<MainScreen>
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-
       body: screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         enableFeedback: false,
@@ -69,11 +69,18 @@ class _MainScreenState extends ConsumerState<MainScreen>
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/orders.png',
+            // icon: Image.asset(
+            //   'assets/favicon.png',
+            //   color: selectedIndex == 2
+            //       ? Color.fromARGB(255, 142, 108, 209)
+            //       : null,
+            // ),
+            icon: Icon(
+              size: 28.sp,
+              Icons.favorite_border_rounded,
               color: selectedIndex == 2
                   ? Color.fromARGB(255, 142, 108, 209)
-                  : null,
+                  : Colors.grey,
             ),
             label: '',
           ),

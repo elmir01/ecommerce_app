@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/data/db_helper.dart';
+import 'package:ecommerce_app/management/flutter_management.dart';
 import 'package:ecommerce_app/views/settings/edit_address_screen.dart';
 import 'package:ecommerce_app/widgets/settings_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,34 +22,16 @@ class AddressScreen extends ConsumerStatefulWidget {
 }
 
 class _AddressScreenState extends ConsumerState<AddressScreen> {
-  final DatabaseHelper _dbhelper = DatabaseHelper();
-  List<Address> _addresses = [];
+
 
   @override
   void initState() {
     super.initState();
-    _fetchAddresses();
+   ref.read(addressViewModel).fetchAddresses();
 
   }
 
-  Future<void> _fetchAddresses() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? userId = prefs.getInt('user_id');
-    print('UserId: $userId');
-    if (userId != null) {
-      final addresses = await _dbhelper.getAddressesByUserId(userId);
-      print('Tapılan adreslər: ${addresses}');
-      setState(() {
-        _addresses = addresses;
-      });
-    } else {
-      print('user yoxdu');
-      setState(() {
-        _addresses = [];
 
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +49,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                 CupertinoPageRoute(
                   builder: (context) => AddAddressScreen(),
                 ),
-              ).then((_) => _fetchAddresses());
+              ).then((_) =>    ref.read(addressViewModel).fetchAddresses());
             },
             icon: Container(
               width: 40,
@@ -91,9 +74,9 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: _addresses.length,
+                itemCount: ref.watch(addressViewModel).addresses.length,
                 itemBuilder: (itemBuilder, index) {
-                  final address = _addresses[index];
+                  final address = ref.watch(addressViewModel).addresses[index];
                   return Dismissible(
                     direction: DismissDirection.endToStart,
                     key: Key(address.id.toString()),
@@ -107,8 +90,8 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                       ),
                     ),
                     onDismissed: (direction) async {
-                      await _dbhelper.deleteAddress(address.id!);
-                      _fetchAddresses();
+                      await ref.watch(addressViewModel).dbhelper.deleteAddress(address.id!);
+                      ref.read(addressViewModel).fetchAddresses();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('${address.streetAddress} deleted')),
                       );
@@ -132,7 +115,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                                 ),
                               ).then((result) {
                                 if (result == true) {
-                                  _fetchAddresses(); // Yenidən adresləri əldə et
+                                  ref.read(addressViewModel).fetchAddresses();
                                 }
                               });
                             },
