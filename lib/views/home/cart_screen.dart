@@ -59,13 +59,11 @@ class CartScreen extends ConsumerWidget {
                 final cartItem = cartItems[index];
                 return Dismissible(
                   key: ValueKey(cartItem.id),
-                  // Kart item-inin unikal id-si
                   direction: DismissDirection.endToStart,
-                  // Sola sürüklemə
                   onDismissed: (direction) {
                     ref
                         .read(cartProvider.notifier)
-                        .removeFromCart(cartItem); // Silmə prosesi
+                        .removeFromCart(cartItem);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content:

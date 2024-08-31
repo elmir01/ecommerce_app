@@ -19,6 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/db_helper.dart';
 import '../../models/user.dart';
+import '../../provider/cart_notifier.dart';
+import '../../provider/favourite_provider.dart';
 import '../auth/login_screen.dart';
 import 'edit_user_screen.dart';
 
@@ -40,6 +42,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartItems = ref.watch(cartProvider);
+    final favourites = ref.watch(favouriteProvider);
     final userViewModel = ref.watch(getUserViewModel);
     print(ref.watch(getUserViewModel).user!.firstName);
     return Scaffold(
@@ -216,6 +220,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onPressed: () {
                   ref.read(getUserViewModel).logOut(context);
                   userViewModel.fileImage = null;
+                  cartItems.length=0;
+                  favourites.length=0;
                 },
                 child: Text(
                   'Sign Out',

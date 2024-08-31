@@ -7,7 +7,7 @@ import '../models/favourite.dart';
 import '../models/user.dart';
 
 class DatabaseHelper {
-  final databaseName = "ecommerceapp2.db";
+  final databaseName = "ecommerceapp3.db";
 
   //user
   String user = '''
@@ -59,7 +59,9 @@ class DatabaseHelper {
       size TEXT,
       color TEXT,
       quantity INTEGER,
-      product TEXT
+      product TEXT,
+      userId INTEGER,
+      FOREIGN KEY(userId) REFERENCES users1(id)
     )
     ''';
   Future<Database> initDB() async {
@@ -260,16 +262,24 @@ class DatabaseHelper {
     final Database db = await initDB();
     return await db.insert('carts', cart.toMap());
   }
-
-  Future<List<Cart>> getCarts() async {
+  // Future<List<Payment>> getPaymentByUserId(int userId) async {
+  //   final Database db = await initDB();
+  //   var res = await db.query("payments", where: "userId = ?", whereArgs: [userId]);
+  //   return res.isNotEmpty ? res.map((a) => Payment.fromMap(a)).toList() : [];
+  // }
+  // Future<List<Cart>> getCarts() async {
+  //   final Database db = await initDB();
+  //   final List<Map<String, dynamic>> maps = await db.query('carts');
+  //
+  //   return List.generate(maps.length, (i) {
+  //     return Cart.fromMap(maps[i]);
+  //   });
+  // }
+Future<List<Cart>> getCartByUserId(int userId) async{
     final Database db = await initDB();
-    final List<Map<String, dynamic>> maps = await db.query('carts');
-
-    return List.generate(maps.length, (i) {
-      return Cart.fromMap(maps[i]);
-    });
-  }
-
+    var res = await db.query('carts',where: 'userId = ?', whereArgs: [userId]);
+    return res.isNotEmpty?res.map((e) => Cart.fromMap(e)).toList(): [];
+}
 
   Future<int> updateCart(Cart cart) async {
     final Database db = await initDB();

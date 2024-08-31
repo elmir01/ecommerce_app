@@ -529,9 +529,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
             final cartItem = Cart(
               listId: 1,
-              // Əgər listId varsa, burada təyin edin
               id: product.id,
-              // Əgər id varsa, burada təyin edin
               size: selectedSize,
               color: selectedColor,
               quantity: quantity,
@@ -540,7 +538,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ? quantity * product.price
                   : quantity * product.disCountPrice!,
               productName: product.name,
-              productImage: product.images[0],
+              productImage: product.images[0], userId: userId!,
 
             );
 

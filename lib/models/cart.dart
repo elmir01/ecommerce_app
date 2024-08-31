@@ -60,9 +60,11 @@ class Cart {
   final int listId;
   final String productJson;
   final String productName;
-  final String productImage;// JSON stringi saxlayır
+  final String productImage;
+  final int userId;
 
   Cart({
+    required this.userId,
     required this.productName,
     required this.productImage,
     required this.listId,
@@ -77,6 +79,7 @@ class Cart {
   // Convert a Cart object into a Map object
   Map<String, dynamic> toMap() {
     return {
+      'userId': userId,
       'listId': listId,
       'id': id,
       'color': color,
@@ -92,6 +95,7 @@ class Cart {
   // Convert a Map object into a Cart object
   factory Cart.fromMap(Map<String, dynamic> map) {
     return Cart(
+      userId: map['userId'],
       productImage: map['productImage'],
       productName: map['productName'],
       price: map['price'],

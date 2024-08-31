@@ -60,11 +60,11 @@ class _CategoriesToProductScreenState
               shrinkWrap: true,
               itemCount: product.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // İki sütunlu grid
+                crossAxisCount: 2,
                 mainAxisSpacing: 10.0.sp,
                 crossAxisSpacing: 11.0.sp,
                 childAspectRatio:
-                    0.65, // Məhsul kartlarının nisbətini tənzimləyir
+                    0.65,
               ),
               itemBuilder: (context, index) {
                 return GestureDetector(
