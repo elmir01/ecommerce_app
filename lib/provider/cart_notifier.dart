@@ -65,7 +65,7 @@ class CartNotifier extends StateNotifier<List<Cart>> {
             productJson: item.productJson, userId: currentUserId!,
           );
         }
-        return item; // Miqdar 1-dən az olmamalıdır
+        return item;
       }
       return item;
     }).toList();

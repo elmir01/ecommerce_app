@@ -66,121 +66,129 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   height: 20.sp,
                 ),
                 Form(
-                  key: key,
+                    key: key,
                     child: Column(
-                  children: [
-                    CustomTextfield(
-                        validator:
-                            ref.read(registerPageViewModel).emailValidator,
-                        textInputType: TextInputType.emailAddress,
-                        controller:
-                            ref.watch(loginPageViewModel).emailController,
-                        text: Text('Email')),
-                    SizedBox(
-                      height: 8.sp,
-                    ),
-                    CustomTextfield(
-                      validator:
-                          ref.read(registerPageViewModel).passwordValidator,
-                      textInputType: TextInputType.visiblePassword,
-                      obscureText: !_passwordVisible,
-                      controller:
-                          ref.watch(loginPageViewModel).passwordController,
-                      text: Text('Password'),
-                      iconButton: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                        },
-                        icon: _passwordVisible
-                            ? Icon(Icons.visibility)
-                            : Icon(
-                                Icons.visibility_off,
-                              ),
-                      ),
-                    ),
-
-
-                    SizedBox(
-                      height: 8.sp,
-                    ),
-                    CustomButton(
-                      text: 'Sign in',
-                      onPressed: () async {
-                        if(key.currentState!.validate()){
-                          ref.read(loginPageViewModel).login(context);
-                        }
-
-                      },
-                    ),
-                    SizedBox(
-                      height: 10.sp,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Forgot password?',
-                          style: TextStyle(fontSize: 14.sp),
+                        CustomTextfield(
+                            validator:
+                            ref
+                                .read(registerPageViewModel)
+                                .emailValidator,
+                            textInputType: TextInputType.emailAddress,
+                            controller:
+                            ref
+                                .watch(loginPageViewModel)
+                                .emailController,
+                            text: Text('Email')),
+                        SizedBox(
+                          height: 8.sp,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => ForgotPasswordScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Reset',
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                        CustomTextfield(
+                          validator:
+                          ref
+                              .read(registerPageViewModel)
+                              .passwordValidator,
+                          textInputType: TextInputType.visiblePassword,
+                          obscureText: !_passwordVisible,
+                          controller:
+                          ref
+                              .watch(loginPageViewModel)
+                              .passwordController,
+                          text: Text('Password'),
+                          iconButton: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                            icon: _passwordVisible
+                                ? Icon(Icons.visibility)
+                                : Icon(
+                              Icons.visibility_off,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Or',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+
+
+                        SizedBox(
+                          height: 8.sp,
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Don\'t have an Account?',
-                          style: TextStyle(fontSize: 14.sp),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => RegisterScreen(),
-                              ),
-                            );
+                        CustomButton(
+                          text: 'Sign in',
+                          onPressed: () async {
+                            if (key.currentState!.validate()) {
+                              ref.read(loginPageViewModel).login(context);
+                            }
                           },
-                          child: Text(
-                            'Create one',
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
+                        ),
+                        SizedBox(
+                          height: 10.sp,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Forgot password?',
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) =>
+                                        ForgotPasswordScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Reset',
+                                style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Or',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Don\'t have an Account?',
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => RegisterScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Create one',
+                                style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
-                )),
+                    )),
                 SizedBox(
                   height: 30.sp,
                 ),

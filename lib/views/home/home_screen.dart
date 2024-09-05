@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/data/db_helper.dart';
+import 'package:ecommerce_app/views/home/filter_screen.dart';
 import 'package:ecommerce_app/views/home/product_detail_screen.dart';
 import 'package:ecommerce_app/views/settings/settings_screen.dart';
 import 'package:ecommerce_app/widgets/cart_button.dart';
+import 'package:ecommerce_app/widgets/filter_textfield.dart';
 import 'package:ecommerce_app/widgets/product_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,14 +48,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   var topSellingProducts = DataService.predefinedTopSellingProducts;
   var newInProducts = DataService.predefinedNewInProducts;
+  TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-
-        ],
+        actions: [],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -121,10 +122,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     ),
                   ),
-                 Padding(
-                   padding:  EdgeInsets.only(right: 10.sp),
-                   child: CartButton(),
-                 ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 10.sp),
+                    child: CartButton(),
+                  ),
                 ],
               ),
               SizedBox(
@@ -133,18 +134,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               SizedBox(
                 width: double.infinity,
                 height: 40.sp,
-                child: TextField(
-                  onChanged: (value) {},
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 5.sp),
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    filled: true,
-                    fillColor: Color.fromARGB(255, 244, 244, 244),
-                    labelText: 'Search',
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.all(Radius.circular(100))),
-                    prefixIcon: Icon(Icons.search),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => FilterScreen(),
+                      ),
+                    );
+                  },
+                  child: AbsorbPointer(
+                    child: FilterTextField(
+                      controller: _searchController,
+                      onChanged: (value) {},
+                      labelText: 'Search',
+                      prefixIcon: Icon(Icons.search),
+                      textInputType: TextInputType.text,
+                    ),
                   ),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/payment.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/address.dart';
@@ -64,8 +65,10 @@ class DatabaseHelper {
       FOREIGN KEY(userId) REFERENCES users1(id)
     )
     ''';
+
   Future<Database> initDB() async {
     final databasePath = await getDatabasesPath();
+ 
     final path = join(databasePath, databaseName);
     return openDatabase(path, version: 1, onCreate: (db, version) async {
       await db.execute(user);
@@ -73,6 +76,7 @@ class DatabaseHelper {
       await db.execute(addressTable);
       await db.execute(paymentTable);
       await db.execute(cartTable);
+
     });
   }
 

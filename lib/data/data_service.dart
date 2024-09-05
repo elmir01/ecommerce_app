@@ -31,8 +31,8 @@ class DataService {
       quantity: 50,
       images: ['assets/jacket.png'],
       categoryId: 1,
-      isDiscount: false,
-      disCountPrice: 0,
+      isDiscount: true,
+      disCountPrice: 100.23,
 
     ),
     Product(
