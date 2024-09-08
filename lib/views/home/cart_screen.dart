@@ -1,23 +1,3 @@
-// import 'package:ecommerce_app/widgets/appbar_back_button.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-//
-// import '../../models/product.dart';
-//
-// class CartScreen extends ConsumerStatefulWidget {
-//   List<Product>? cartProducts;
-//   int? quantity;
-//   String? color;
-//   String? size;
-//
-//   CartScreen(
-//       {super.key, this.cartProducts, this.quantity, this.size, this.color});
-//
-//   @override
-//   ConsumerState createState() => _CartScreenState();
-// }
-//
-
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -141,7 +121,7 @@ class CartItemTile extends ConsumerWidget {
               IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {
-                  cartNotifier.increaseQuantity(cartItem); // Miqdarı artır
+                  cartNotifier.increaseQuantity(cartItem);
                 },
               ),
               SizedBox(width: 16),

@@ -55,7 +55,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color.fromARGB(
-                    255, 244, 244, 244), // Dairenin arkaplan rengi
+                    255, 244, 244, 244),
               ),
               child: Consumer(
                 builder: (context, ref, child) {
@@ -255,7 +255,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     if (selectedSize != null) {
                       setState(() {
                         this.selectedSize =
-                            selectedSize; // Modal bottom sheetdən gələn ölçü təyin olunur
+                            selectedSize;
                       });
                     }
                   });
@@ -395,7 +395,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     if (selectedSize != null) {
                       setState(() {
                         this.selectedColor =
-                            selectedColor; // Modal bottom sheetdən gələn ölçü təyin olunur
+                            selectedColor;
                       });
                     }
                   });
@@ -525,7 +525,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             int? userId = prefs.getInt('user_id');
             final productJson = jsonEncode(
-                product.toMap()); // Product obyektini JSON stringə çevir
+                product.toMap());
 
             final cartItem = Cart(
               listId: 1,

@@ -131,18 +131,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                       ),
                     );
               }),
-              // SettingsContainer(
-              //   width: 342.sp,
-              //   height: 72.sp,
-              //   child: Center(
-              //     child: ListTile(
-              //       title: Text('**** 4187'),
-              //       trailing: Icon(
-              //         Icons.navigate_next,
-              //       ),
-              //     ),
-              //   ),
-              // )
+
             ],
           ),
         ),

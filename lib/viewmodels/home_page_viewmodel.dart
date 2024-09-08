@@ -10,7 +10,6 @@ class HomePageViewModel extends ChangeNotifier{
   Future<String?> fetchImage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? userId = prefs.getInt('user_id');
-    // Replace with your method to fetch the image path from the database
     final imageUrl = await db.getProfileImagePath(userId!);
     return imageUrl;
   }

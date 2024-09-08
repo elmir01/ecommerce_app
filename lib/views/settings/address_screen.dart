@@ -57,7 +57,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color.fromARGB(
-                    255, 244, 244, 244), // Dairenin arkaplan rengi
+                    255, 244, 244, 244),
               ),
               child: Icon(Icons.add),
             ),

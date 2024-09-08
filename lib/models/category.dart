@@ -4,7 +4,7 @@ class Category {
   final String image;
   Category({required this.id, required this.name,required this.image});
 
-  // Convert a Category object into a Map object
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -13,7 +13,6 @@ class Category {
     };
   }
 
-  // Convert a Map object into a Category object
   factory Category.fromMap(Map<String, dynamic> map) {
     return Category(
       id: map['id'],

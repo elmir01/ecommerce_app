@@ -51,7 +51,6 @@ class LoginPageViewModel extends ChangeNotifier {
     var res = await db.authenticate(
         User(email: emailController.text, password: passwordController.text));
     if (res == true) {
-      //If result is correct then go to profile or home
       await _saveUserId(usrDetails!.id);
       emailController.clear();
       passwordController.clear();
@@ -61,7 +60,6 @@ class LoginPageViewModel extends ChangeNotifier {
           (route) => false);
       notifyListeners();
     } else {
-      //Otherwise show the error message
       notifyListeners();
       isLoginTrue = true;
     }

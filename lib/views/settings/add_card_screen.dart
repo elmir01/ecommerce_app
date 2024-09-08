@@ -52,9 +52,8 @@ class _AddCardScreenState extends ConsumerState<AddCardScreen> {
       );
 
       await _databaseHelper.addPayment(payment);
-      Navigator.pop(context); // Navigate back to the previous screen
+      Navigator.pop(context);
     } else {
-      // If validation fails, show a snackbar or handle accordingly
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please correct the errors in the form')),
       );

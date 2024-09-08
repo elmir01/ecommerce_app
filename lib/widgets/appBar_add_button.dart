@@ -20,7 +20,7 @@ class _AppBarAddButtonState extends State<AppBarAddButton> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Color.fromARGB(
-              255, 244, 244, 244), // Dairenin arkaplan rengi
+              255, 244, 244, 244),
         ),
         child: Icon(Icons.add),
       ),

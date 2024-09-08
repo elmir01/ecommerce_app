@@ -12,11 +12,11 @@ class AppBarBackButton extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color:  Color.fromARGB(255, 244, 244, 244), // Dairenin arkaplan rengi
+          color:  Color.fromARGB(255, 244, 244, 244),
         ),
         child: Icon(
           Icons.arrow_back,
-          color: Colors.black, // Ok ikonunun rengi
+          color: Colors.black,
         ),
       ),
       onPressed: () {

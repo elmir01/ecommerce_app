@@ -45,7 +45,7 @@ class _EditPaymentsScreenState extends ConsumerState<EditPaymentsScreen> {
 
     await _databaseHelper.updatePayment(updatedPayment);
     print('ID:${updatedPayment.id}');
-    Navigator.pop(context,true); // geri qayıdın
+    Navigator.pop(context,true);
   }
   @override
   Widget build(BuildContext context) {

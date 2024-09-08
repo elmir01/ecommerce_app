@@ -30,7 +30,6 @@ class Product {
      this.disCountPrice
   });
 
-  // Convert a Product object into a Map object
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -40,7 +39,7 @@ class Product {
       'sizes': sizes!.join(','),
       'colors': colors,
       'quantity': quantity,
-      'images': images.join(','), // Convert the list to a string
+      'images': images.join(','),
       'categoryId': categoryId,
       'disCountPrice': disCountPrice,
       'isDisCount': isDiscount,
@@ -49,7 +48,6 @@ class Product {
     };
   }
 
-  // Convert a Map object into a Product object
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
       listId: map['listId'],
@@ -60,7 +58,7 @@ class Product {
       sizes: (map['sizes']as String ).split(','),
       colors: map['colors'],
       quantity: map['quantity'],
-      images: (map['images'] as String).split(','), // Convert the string to a list
+      images: (map['images'] as String).split(','),
       categoryId: map['categoryId'],
       disCountPrice: map['disCountPrice'],
       isDiscount: map['isDiscount'],

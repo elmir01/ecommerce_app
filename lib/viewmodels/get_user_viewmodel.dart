@@ -30,12 +30,12 @@ class GetUserViewModel extends ChangeNotifier {
         notifyListeners();
       } else {
         print("User not found.");
-        user = null; // Ensure user is set to null if not found
+        user = null;
         notifyListeners();
       }
     } else {
       print("User ID not found in SharedPreferences.");
-      user = null; // Ensure user is set to null if user ID is not found
+      user = null;
       notifyListeners();
     }
   }
@@ -50,7 +50,7 @@ class GetUserViewModel extends ChangeNotifier {
   }
   Future<void> logOut(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user_id');  // Remove the saved user ID
+    await prefs.remove('user_id');
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -110,7 +110,7 @@ class GetUserViewModel extends ChangeNotifier {
       await db.deleteProfileImage(userId);
 
 
-        fileImage = null;  // Şəkil referansını sıfırlayın
+        fileImage = null;
 notifyListeners();
 
       ScaffoldMessenger.of(context).showSnackBar(

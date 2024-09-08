@@ -266,19 +266,7 @@ class DatabaseHelper {
     final Database db = await initDB();
     return await db.insert('carts', cart.toMap());
   }
-  // Future<List<Payment>> getPaymentByUserId(int userId) async {
-  //   final Database db = await initDB();
-  //   var res = await db.query("payments", where: "userId = ?", whereArgs: [userId]);
-  //   return res.isNotEmpty ? res.map((a) => Payment.fromMap(a)).toList() : [];
-  // }
-  // Future<List<Cart>> getCarts() async {
-  //   final Database db = await initDB();
-  //   final List<Map<String, dynamic>> maps = await db.query('carts');
-  //
-  //   return List.generate(maps.length, (i) {
-  //     return Cart.fromMap(maps[i]);
-  //   });
-  // }
+
 Future<List<Cart>> getCartByUserId(int userId) async{
     final Database db = await initDB();
     var res = await db.query('carts',where: 'userId = ?', whereArgs: [userId]);

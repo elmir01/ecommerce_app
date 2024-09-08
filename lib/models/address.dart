@@ -4,7 +4,7 @@ class Address {
   final String city;
   final String state;
   final String zipCode;
-  final int userId; // New field to associate the address with a user
+  final int userId;
 
   Address({
     this.id,
@@ -12,10 +12,10 @@ class Address {
     required this.state,
     required this.zipCode,
     required this.city,
-    required this.userId, // Include userId in the constructor
+    required this.userId,
   });
 
-  // Convert Address object to Map (for inserting into the database)
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -23,18 +23,18 @@ class Address {
       'city': city,
       'state': state,
       'zipCode': zipCode,
-      'userId': userId, // Include userId in the map
+      'userId': userId,
     };
   }
 
-  // Convert Address object to Map without ID (useful for inserts)
+
   Map<String, dynamic> toMapWithoutId() {
     return {
       'streetAddress': streetAddress,
       'city': city,
       'state': state,
       'zipCode': zipCode,
-      'userId': userId, // Include userId in the map
+      'userId': userId,
     };
   }
 

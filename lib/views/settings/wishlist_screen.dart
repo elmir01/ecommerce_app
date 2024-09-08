@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/views/home/product_detail_screen.dart';
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,14 +30,16 @@ class _WishlistScreenState extends ConsumerState<WishlistScreen> {
           shrinkWrap: true,
           itemCount: favourites.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // İki sütunlu grid
+            crossAxisCount: 2,
             mainAxisSpacing: 10.0.sp,
             crossAxisSpacing: 11.0.sp,
-            childAspectRatio: 0.65, // Məhsul kartlarının nisbətini tənzimləyir
+            childAspectRatio: 0.65,
           ),
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, CupertinoPageRoute(builder: (context)=>ProductDetailScreen(product: favourites[index])));
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -46,7 +49,7 @@ class _WishlistScreenState extends ConsumerState<WishlistScreen> {
                       color: Colors.grey.withOpacity(0.5),
                       // spreadRadius: 2,
                       blurRadius: 1,
-                      // offset: Offset(0, 3), // Kölgə effekti
+                      // offset: Offset(0, 3),
                     ),
                   ],
                 ),
