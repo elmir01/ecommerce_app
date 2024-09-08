@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/data/data_service.dart';
+import 'package:ecommerce_app/management/flutter_management.dart';
 import 'package:ecommerce_app/views/home/product_detail_screen.dart';
 import 'package:ecommerce_app/widgets/appbar_back_button.dart';
 import 'package:ecommerce_app/widgets/filter_textfield.dart';
@@ -19,48 +20,12 @@ class FilterScreen extends ConsumerStatefulWidget {
 }
 
 class _FilterScreenState extends ConsumerState<FilterScreen> {
-  var _searchController = TextEditingController();
-  ScrollController? _scrollController = ScrollController();
-  List<Product> filteredProducts = [];
-  var products1 = DataService.predefinedProducts;
-  var products2 = DataService.predefinedNewInProducts;
-  var products3 = DataService.predefinedTopSellingProducts;
-  double minPrice = 0;
-  double maxPrice = 0;
-
-  String searchText = '';
-
-  void mergeProductLists() {
-    filteredProducts = [...products1, ...products2, ...products3];
-  }
-
-  void filterProducts(String query, double minPrice, double maxPrice) {
-    List<Product> results = [];
-
-    results = [...products1, ...products2, ...products3];
-    results = results
-        .where(
-            (product) => product.price >= minPrice && product.price <= maxPrice)
-        .toList();
-
-    if (query.isNotEmpty) {
-      results = results
-          .where((product) =>
-          product.name.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    }
-
-    setState(() {
-      filteredProducts = results;
-    });
-  }
 
   void initState() {
     super.initState();
-    mergeProductLists();
+    ref.read(filterViewModel).mergeProductLists();
   }
-  TextEditingController minPriceController = TextEditingController();
-  TextEditingController maxPriceController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,10 +37,13 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
         child: Column(
           children: [
             FilterTextField(
-              controller: _searchController,
+              controller: ref.watch(filterViewModel).searchController,
               onChanged: (value) {
-                searchText = value;
-                filterProducts(searchText, minPrice, maxPrice);
+                ref.watch(filterViewModel).searchText = value;
+                ref.read(filterViewModel).filterProducts(
+                    ref.watch(filterViewModel).searchText,
+                    ref.watch(filterViewModel).minPrice,
+                    ref.watch(filterViewModel).maxPrice);
               },
               labelText: 'Search',
               prefixIcon: Icon(Icons.search),
@@ -87,13 +55,12 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-
                 Expanded(
-                  child:FilterTextField(
-                      controller: minPriceController,
+                  child: FilterTextField(
+                      controller: ref.watch(filterViewModel).minPriceController,
                       onChanged: (value) {
                         setState(() {
-                          minPrice = double.tryParse(value)!;
+                          ref.watch(filterViewModel).minPrice = double.tryParse(value)!;
                         });
                       },
                       labelText: 'Min Price',
@@ -103,10 +70,10 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                 SizedBox(width: 10),
                 Expanded(
                   child: FilterTextField(
-                      controller: maxPriceController,
+                      controller: ref.watch(filterViewModel).maxPriceController,
                       onChanged: (value) {
                         setState(() {
-                          maxPrice = double.tryParse(value)!;
+                          ref.watch(filterViewModel).maxPrice = double.tryParse(value)!;
                         });
                       },
                       labelText: 'Min Price',
@@ -121,9 +88,12 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                     backgroundColor: Color.fromARGB(255, 142, 108, 209),
                   ),
                   onPressed: () {
-                    if (minPrice != null && maxPrice != null) {
-                      filterProducts(searchText, minPrice, maxPrice);
-                    }else {
+                    if (ref.watch(filterViewModel).minPrice != null && ref.watch(filterViewModel).maxPrice != null) {
+                      ref.read(filterViewModel).filterProducts(
+                          ref.watch(filterViewModel).searchText,
+                          ref.watch(filterViewModel).minPrice,
+                          ref.watch(filterViewModel).maxPrice);
+                    } else {
                       print('xeta');
                     }
                   },
@@ -139,9 +109,9 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
             ),
             Expanded(
               child: GridView.builder(
-                controller: _scrollController,
+                controller: ref.watch(filterViewModel).scrollController,
                 shrinkWrap: true,
-                itemCount: filteredProducts.length,
+                itemCount: ref.watch(filterViewModel).filteredProducts.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 10.0.sp,
@@ -155,7 +125,7 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                         context,
                         CupertinoPageRoute(
                           builder: (context) => ProductDetailScreen(
-                            product: filteredProducts[index],
+                            product: ref.watch(filterViewModel).filteredProducts[index],
                           ),
                         ),
                       );
@@ -171,7 +141,7 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(10.0)),
                                   child: Image.asset(
-                                    '${filteredProducts[index].images[0]}',
+                                    '${ref.watch(filterViewModel).filteredProducts[index].images[0]}',
                                     fit: BoxFit.cover,
                                     width: double.infinity,
                                     height: 200.sp,
@@ -184,7 +154,7 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                                     builder: (context, ref, child) {
                                       final isFavourite = ref
                                           .watch(favouriteProvider.notifier)
-                                          .isFavourite(filteredProducts[index]);
+                                          .isFavourite(ref.watch(filterViewModel).filteredProducts[index]);
 
                                       return IconButton(
                                         icon: Icon(
@@ -201,7 +171,7 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                                                 .read(
                                                     favouriteProvider.notifier)
                                                 .toggleFavourite(
-                                                    filteredProducts[index]);
+                                                ref.watch(filterViewModel).filteredProducts[index]);
                                           });
                                         },
                                       );
@@ -213,7 +183,7 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                filteredProducts[index].name,
+                                ref.watch(filterViewModel).filteredProducts[index].name,
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                 ),
@@ -227,18 +197,18 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
                                   child: Text(
-                                    '\$${filteredProducts[index].price}',
+                                    '\$${ref.watch(filterViewModel).filteredProducts[index].price}',
                                     style: TextStyle(
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                if (filteredProducts[index].isDiscount == true)
+                                if (ref.watch(filterViewModel).filteredProducts[index].isDiscount == true)
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Text(
-                                      '\$${filteredProducts[index].disCountPrice.toString()}',
+                                      '\$${ref.watch(filterViewModel).filteredProducts[index].disCountPrice.toString()}',
                                       style: TextStyle(
                                         fontSize: 16.sp,
                                         color: Colors.grey,

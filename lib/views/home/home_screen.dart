@@ -326,27 +326,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     SizedBox(height: 4),
                                     Row(
                                       children: [
+                                          if(item.isDiscount==true)
+                                          Text(
+                                            '\$${item.disCountPrice}',
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                        item.isDiscount==true? SizedBox(width: 10.sp,):SizedBox(),
                                         Text(
                                           '\$${item.price}',
                                           style: TextStyle(
                                             fontSize: 16.sp,
-                                            fontWeight: FontWeight.bold,
+                                            color: item.isDiscount==true?Colors.grey:null,
+                                            fontWeight:item.isDiscount==false? FontWeight.bold:null,
+                                            decoration:
+                                            item.isDiscount==true? TextDecoration.lineThrough:null,
                                           ),
                                         ),
-                                        if (item.isDiscount == true)
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 8.0.sp),
-                                            child: Text(
-                                              '\$${item.disCountPrice}',
-                                              style: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: Colors.grey,
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                              ),
-                                            ),
-                                          ),
                                       ],
                                     ),
                                   ],
@@ -471,27 +469,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   SizedBox(height: 4.sp),
                                   Row(
                                     children: [
+                                      if(item.isDiscount==true)
+                                        Text(
+                                          '\$${item.disCountPrice}',
+                                          style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      item.isDiscount==true? SizedBox(width: 10.sp,):SizedBox(),
                                       Text(
                                         '\$${item.price}',
                                         style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.sp,
+                                          color: item.isDiscount==true?Colors.grey:null,
+                                          fontWeight:item.isDiscount==false? FontWeight.bold:null,
+                                          decoration:
+                                          item.isDiscount==true? TextDecoration.lineThrough:null,
                                         ),
                                       ),
-                                      if (item.isDiscount == true)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                            '\$${item.disCountPrice.toString()}',
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: Colors.grey,
-                                              decoration:
-                                                  TextDecoration.lineThrough,
-                                            ),
-                                          ),
-                                        ),
                                     ],
                                   ),
                                 ],

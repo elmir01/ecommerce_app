@@ -53,7 +53,7 @@ class DataService {
       images: ['assets/slides.png'],
       categoryId: 1,
       isDiscount: true,
-      disCountPrice: 100.97,
+      disCountPrice:40.00,
     ),
     Product(
       listId: 1,
@@ -196,6 +196,26 @@ class DataService {
       categoryId: 1,
       isDiscount: false,
       disCountPrice: 0,
+    ),
+    Product(
+      listId: 2,
+      id: 7,
+      name: 'Men\'s Ice-Dye Pullover Hoodie',
+      description: 'Comfortable cotton t-shirt',
+      price: 97.0,
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
+      colors: {
+        'Orange': '0xFFFFA500',
+        'Black': '0xFF000000',
+        'Red': '0xFFFF0000',
+        'Yellow': '0xFFFFFF00',
+        'Blue': '0xFF0000FF'
+      },
+      quantity: 200,
+      images: ['assets/png7.png'],
+      categoryId: 1,
+      isDiscount: true,
+      disCountPrice: 80.0,
     ),
     // Add more products
   ];

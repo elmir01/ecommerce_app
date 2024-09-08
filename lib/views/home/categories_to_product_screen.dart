@@ -32,7 +32,7 @@ class _CategoriesToProductScreenState
         leading: AppBarBackButton(),
         actions: [
           Padding(
-            padding:  EdgeInsets.only(right: 15.sp),
+            padding: EdgeInsets.only(right: 15.sp),
             child: CartButton(),
           )
         ],
@@ -63,8 +63,7 @@ class _CategoriesToProductScreenState
                 crossAxisCount: 2,
                 mainAxisSpacing: 10.0.sp,
                 crossAxisSpacing: 11.0.sp,
-                childAspectRatio:
-                    0.65,
+                childAspectRatio: 0.65,
               ),
               itemBuilder: (context, index) {
                 return GestureDetector(
@@ -128,26 +127,54 @@ class _CategoriesToProductScreenState
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              product[index].name,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product[index].name,
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 5.sp,),
+                                Row(
+                                  children: [
+                                    if (product[index].isDiscount == true)
+                                      Text(
+                                        '\$${product[index].disCountPrice}',
+                                        style: TextStyle(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    product[index].isDiscount == true
+                                        ? SizedBox(
+                                            width: 10.sp,
+                                          )
+                                        : SizedBox(),
+                                    Text(
+                                      '\$${product[index].price}',
+                                      style: TextStyle(
+                                        fontSize: 16.sp,
+                                        color: product[index].isDiscount == true
+                                            ? Colors.grey
+                                            : null,
+                                        fontWeight:
+                                            product[index].isDiscount == false
+                                                ? FontWeight.bold
+                                                : null,
+                                        decoration:
+                                            product[index].isDiscount == true
+                                                ? TextDecoration.lineThrough
+                                                : null,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              '\$${product[index].price}',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          )
                         ],
                       ),
                     ),
