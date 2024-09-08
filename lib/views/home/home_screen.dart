@@ -11,6 +11,7 @@ import 'package:ecommerce_app/widgets/product_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,9 +72,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text('Xəta: ${snapshot.error}');
-                      } else if (snapshot.hasData) {
+                      }
+                      // else if (snapshot.hasError) {
+                      //   return Text('Xəta: ${snapshot.error}');
+                      // }
+                      else if (snapshot.hasData) {
                         return CircleAvatar(
                           radius: 25.sp,
                           backgroundImage: snapshot.data == null
