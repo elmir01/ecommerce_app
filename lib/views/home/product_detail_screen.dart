@@ -54,8 +54,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromARGB(
-                    255, 244, 244, 244),
+                color: Color.fromARGB(255, 244, 244, 244),
               ),
               child: Consumer(
                 builder: (context, ref, child) {
@@ -86,6 +85,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 10.sp,
+            ),
             CarouselSlider.builder(
               itemCount: product.images.length,
               itemBuilder: (context, index, realIndex) {
@@ -138,26 +140,32 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.sp),
               child: Row(
                 children: [
-                  Text(
-                    '\$${product.price.toString()}',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Color.fromARGB(255, 142, 108, 209),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5.sp,
-                  ),
                   if (product.isDiscount == true)
                     Text(
                       '\$${product.disCountPrice}',
                       style: TextStyle(
                         fontSize: 16.sp,
-                        color: Colors.grey,
-                        decoration: TextDecoration.lineThrough,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 142, 108, 209),
                       ),
-                    )
+                    ),
+                  product.isDiscount == true
+                      ? SizedBox(
+                          width: 10.sp,
+                        )
+                      : SizedBox(),
+                  Text(
+                    '\$${product.price}',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: product.isDiscount == true ? Colors.grey : Color.fromARGB(255, 142, 108, 209),
+                      fontWeight:
+                          product.isDiscount == false ? FontWeight.bold : null,
+                      decoration: product.isDiscount == true
+                          ? TextDecoration.lineThrough
+                          : null,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -254,8 +262,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ).then((selectedSize) {
                     if (selectedSize != null) {
                       setState(() {
-                        this.selectedSize =
-                            selectedSize;
+                        this.selectedSize = selectedSize;
                       });
                     }
                   });
@@ -394,8 +401,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ).then((selectedSize) {
                     if (selectedSize != null) {
                       setState(() {
-                        this.selectedColor =
-                            selectedColor;
+                        this.selectedColor = selectedColor;
                       });
                     }
                   });
@@ -524,8 +530,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           onTap: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             int? userId = prefs.getInt('user_id');
-            final productJson = jsonEncode(
-                product.toMap());
+            final productJson = jsonEncode(product.toMap());
 
             final cartItem = Cart(
               listId: 1,
@@ -538,8 +543,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ? quantity * product.price
                   : quantity * product.disCountPrice!,
               productName: product.name,
-              productImage: product.images[0], userId: userId!,
-
+              productImage: product.images[0],
+              userId: userId!,
             );
 
             ref.read(cartProvider.notifier).addToCart(cartItem);

@@ -114,15 +114,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => EditUserScreen(user: userViewModel.user!,),
+                          builder: (context) => EditUserScreen(
+                            user: userViewModel.user!,
+                          ),
                         ),
-                      ).then(
-                        (value) {
-                          if(value==true){
-                            ref.read(getUserViewModel).loadUser();
-                          }
+                      ).then((value) {
+                        if (value == true) {
+                          ref.read(getUserViewModel).loadUser();
                         }
-                      );
+                      });
                     },
                     child: Text('Edit'),
                   ),
@@ -220,8 +220,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onPressed: () {
                   ref.read(getUserViewModel).logOut(context);
                   userViewModel.fileImage = null;
-                  cartItems.length=0;
-                  favourites.length=0;
+                  cartItems.length = 0;
+                  favourites.length = 0;
                 },
                 child: Text(
                   'Sign Out',
@@ -253,33 +253,64 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                iconSize: 40.sp,
-                onPressed: () {
-                  ref.read(getUserViewModel).imageFromCamera();
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.camera_alt_rounded),
+              Column(
+                children: [
+                  IconButton(
+                    iconSize: 40.sp,
+                    onPressed: () {
+                      ref.read(getUserViewModel).imageFromCamera();
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.camera_alt_rounded,
+                      color: Color.fromARGB(255, 142, 108, 209),
+                    ),
+                  ),
+                  Text(
+                    'Camera',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              IconButton(
-                iconSize: 40.sp,
-                onPressed: () {
-                  ref.read(getUserViewModel).imageFromGallery();
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.photo_camera_back_outlined,
-                ),
+              Column(
+                children: [
+                  IconButton(
+                    iconSize: 40.sp,
+                    onPressed: () {
+                      ref.read(getUserViewModel).imageFromGallery();
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.photo_camera_back_outlined,
+                      color: Color.fromARGB(255, 142, 108, 209),
+                    ),
+                  ),
+                  Text(
+                    'Gallery',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              IconButton(
-                iconSize: 40.sp,
-                onPressed: () async {
-                  await ref.read(getUserViewModel).deleteImage(context);
-                  Navigator.pop(context);
+              Column(
+                children: [
+                  IconButton(
+                    iconSize: 40.sp,
+                    onPressed: () async {
+                      await ref.read(getUserViewModel).deleteImage(context);
+                      Navigator.pop(context);
 
-                  print('delete');
-                },
-                icon: Icon(Icons.delete),
+                      print('delete');
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Color.fromARGB(255, 142, 108, 209),
+                    ),
+                  ),
+                  Text(
+                    'Delete',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
               )
             ],
           ),

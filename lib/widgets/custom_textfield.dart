@@ -32,6 +32,7 @@ class CustomTextfield extends StatelessWidget {
       width: width.sp,
       height: height.sp,
       child: TextFormField(
+       textInputAction: TextInputAction.next,
         keyboardType: textInputType,
         validator: validator,
         obscureText: obscureText,

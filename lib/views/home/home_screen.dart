@@ -35,10 +35,10 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }
 
-const List<String> list = <String>['Man', 'Woman'];
+
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  String dropdownValue = list.first;
+
 
   @override
   void initState() {
@@ -90,40 +90,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         );
                       }
                     },
-                  ),
-                  Container(
-                    width: 72.sp,
-                    height: 40.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(90.sp)),
-                      color: Color.fromARGB(255, 244, 244, 244),
-                    ),
-                    child: Center(
-                      child: DropdownButton<String>(
-                        value: dropdownValue,
-                        icon: const Icon(Icons.arrow_drop_down),
-                        elevation: 16,
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                        underline: Container(
-                          height: 0.sp,
-                          color: Colors.deepPurpleAccent,
-                        ),
-                        onChanged: (String? value) {
-                          // This is called when the user selects an item.
-                          setState(() {
-                            dropdownValue = value!;
-                          });
-                        },
-                        items:
-                            list.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 10.sp),

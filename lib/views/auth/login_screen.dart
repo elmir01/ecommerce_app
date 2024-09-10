@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:ecommerce_app/management/flutter_management.dart';
 import 'package:ecommerce_app/views/auth/register_screen.dart';
 import 'package:ecommerce_app/views/main/main_screen.dart';
