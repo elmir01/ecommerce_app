@@ -16,7 +16,7 @@ class CartButton extends ConsumerStatefulWidget {
 class _CartButtonState extends ConsumerState<CartButton> {
   @override
   Widget build(BuildContext context) {
-    return     InkWell(
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -28,8 +28,14 @@ class _CartButtonState extends ConsumerState<CartButton> {
       child: Consumer(builder: (context, watch, child) {
         final itemCount = ref.watch(cartProvider).length;
         return badges.Badge(
-            badgeContent: Text(itemCount.toString(),
-                style: TextStyle(color: Colors.white)),
+            badgeContent: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+              child: Text(itemCount.toString(),
+                  style: TextStyle(color: Colors.white)),
+            ),
             child: CircleAvatar(
               backgroundColor: Color.fromARGB(255, 142, 108, 209),
               child: Icon(

@@ -35,11 +35,7 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }
 
-
-
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-
-
   @override
   void initState() {
     super.initState();
@@ -57,9 +53,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         actions: [],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.sp),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.sp),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -203,8 +199,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   Text(
                     'Top Selling',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 17.sp),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17.sp,
+                      color: Color.fromARGB(255, 142, 108, 209),
+                    ),
                   ),
                   TextButton(
                     onPressed: () {},
@@ -295,23 +294,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     SizedBox(height: 4),
                                     Row(
                                       children: [
-                                          if(item.isDiscount==true)
+                                        if (item.isDiscount == true)
                                           Text(
                                             '\$${item.disCountPrice}',
                                             style: TextStyle(
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.bold
-                                            ),
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                        item.isDiscount==true? SizedBox(width: 10.sp,):SizedBox(),
+                                        item.isDiscount == true
+                                            ? SizedBox(
+                                                width: 10.sp,
+                                              )
+                                            : SizedBox(),
                                         Text(
                                           '\$${item.price}',
                                           style: TextStyle(
                                             fontSize: 16.sp,
-                                            color: item.isDiscount==true?Colors.grey:null,
-                                            fontWeight:item.isDiscount==false? FontWeight.bold:null,
-                                            decoration:
-                                            item.isDiscount==true? TextDecoration.lineThrough:null,
+                                            color: item.isDiscount == true
+                                                ? Colors.grey
+                                                : null,
+                                            fontWeight: item.isDiscount == false
+                                                ? FontWeight.bold
+                                                : null,
+                                            decoration: item.isDiscount == true
+                                                ? TextDecoration.lineThrough
+                                                : null,
                                           ),
                                         ),
                                       ],
@@ -438,23 +445,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   SizedBox(height: 4.sp),
                                   Row(
                                     children: [
-                                      if(item.isDiscount==true)
+                                      if (item.isDiscount == true)
                                         Text(
                                           '\$${item.disCountPrice}',
                                           style: TextStyle(
                                               fontSize: 16.sp,
-                                              fontWeight: FontWeight.bold
-                                          ),
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      item.isDiscount==true? SizedBox(width: 10.sp,):SizedBox(),
+                                      item.isDiscount == true
+                                          ? SizedBox(
+                                              width: 10.sp,
+                                            )
+                                          : SizedBox(),
                                       Text(
                                         '\$${item.price}',
                                         style: TextStyle(
                                           fontSize: 16.sp,
-                                          color: item.isDiscount==true?Colors.grey:null,
-                                          fontWeight:item.isDiscount==false? FontWeight.bold:null,
-                                          decoration:
-                                          item.isDiscount==true? TextDecoration.lineThrough:null,
+                                          color: item.isDiscount == true
+                                              ? Colors.grey
+                                              : null,
+                                          fontWeight: item.isDiscount == false
+                                              ? FontWeight.bold
+                                              : null,
+                                          decoration: item.isDiscount == true
+                                              ? TextDecoration.lineThrough
+                                              : null,
                                         ),
                                       ),
                                     ],
