@@ -7,7 +7,7 @@ import '../models/address.dart';
 import '../models/favourite.dart';
 import '../models/user.dart';
 
-class DatabaseHelper {
+class  DatabaseHelper {
   final databaseName = "ecommerceapp3.db";
 
   //user
